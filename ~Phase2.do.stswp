@@ -1,6 +1,0 @@
-* Setting Working Directory
-cd "/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/BONUS PROJECT STUFF/ECO375-Project/DATA"
-import delimited "data_2019_2020_2021.csv"
-
-*
-scatter gdp corruption
