@@ -1,0 +1,22 @@
+Variables in df_all_features
+- Budget Balance Risk
+- Bureaucracy Quality
+- CAXGS (Current Account as % of Exports of Goods and Services)
+- Composite
+- Corruption
+- GDP Per Capita
+- Current Account
+- Debt Service
+- Democratic Accountability
+- Ethnic Tension
+- Exchange Rate
+- External Conflict
+- Foreign Debt
+- GDP
+- GDP Growth
+- Inflation
+- International Liquidity
+- Law and Order
+- Military in Politics
+- Population
+- Religious Tension
