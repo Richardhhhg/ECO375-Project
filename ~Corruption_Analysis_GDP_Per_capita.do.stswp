@@ -1,0 +1,8 @@
+* importing data
+import delimited "df_all_features.csv", clear
+
+* filtering for years where corruption is not NA
+keep if !missing("corruption")
+
+* scatter plot for corruption and GDP
+scatter gdp corruption
