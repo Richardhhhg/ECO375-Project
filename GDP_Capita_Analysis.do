@@ -19,13 +19,15 @@ xtset country_id Year
 xtreg GDP_Per_Capita Composite
 est store Pol_Risk_GDP_Capita_2
 
+estimates table Pol_Risk_GDP_Capita_1 Pol_Risk_GDP_Capita_2, b(%9.3f) se stats(r2)
+
 * ---------------------------------------------------------------------------- *
 
 * With Log GDP Per Capita
 generate log_gdp_per_capita = ln(GDP_Per_Capita)
 scatter log_gdp_per_capita Composite, title("Log GDP Per Capita and Composite")
 
-regress log_gdp_per_capita Corruption
+regress log_gdp_per_capita Composite
 est store Pol_Risk_Ln_GDP_Capita_1
 
 * with controls for entity and time effects
@@ -33,5 +35,4 @@ xtreg log_gdp_per_capita Composite
 est store Pol_Risk_Ln_GDP_Capita_2
 
 * table for regressions involving GDP Per Capita and Corruption
-estimates table Corruption_GDP_per_capita_1, b(%9.3f) se stats(r2)
-estimates table AMONGUS, b(%9.3f) se stats(r2)
+estimates table Pol_Risk_Ln_GDP_Capita_1 Pol_Risk_Ln_GDP_Capita_2, b(%9.3f) se stats(r2)
