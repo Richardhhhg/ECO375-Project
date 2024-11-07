@@ -2,54 +2,47 @@
 use "df_all_features.dta", clear
 
 * removing missing values
-keep if !missing(Corruption)
+keep if !missing(Composite)
 keep if !missing(GDP)
 
-* scatter of gdp and corruption
-scatter GDP Corruption, title("Real GDP and Corruption Index")
+* relationship of GDP and Composite
+scatter GDP Composite, title("Real GDP and Political Risk")
+regress GDP Composite
+est store Pol_Risk_GDP_1
 
-* variable for log of GDP
+* with fixed time effects
+encode Country, gen(country_id)
+xtset country_id Year
+
+xtreg GDP Composite
+est store Pol_Risk_GDP_2
+
+* Controlling for things for future study
+// scatter GDP Corruption, title("Real GDP and Corruption Index")
+// regress GDP Corruption
+// est store Corruption_GDP_1
+
+* controlling for corruption
+// regress GDP Composite Corruption
+// est store Pol_Risk_GDP_3
+
+estimates table Pol_Risk_GDP_1 Pol_Risk_GDP_2, b(%9.3f) se stats(r2)
+
+* ---------------------------------------------------------------------------- *
+
+* With Log of GDP
 generate log_gdp = ln(GDP)
-scatter log_gdp Corruption, title("Log Real GDP and Corruption Index")
+scatter log_gdp Composite, title("Log GDP and Political Risk")
 
-regress log_gdp Corruption
-est store Corruption_GDP_1
+regress log_gdp Composite
+est store Pol_Risk_Ln_GDP_1
+
+* with control for entity and time effects
+xtreg log_gdp Composite
+est store Pol_Risk_Ln_GDP_2
+
+// regress log_gdp Corruption
+// est store Corruption_Ln_GDP_1
 
 * table for regressions involving Log GDP and Corruption
-estimates table Corruption_GDP_1, b(%9.3f) se stats(r2)
-
-* investigating relationship between Corruption and GDP per Capita
-* Resetting Everything Each time Since Potentially Different Missing Vars
-use "df_all_features.dta", clear
-
-keep if !missing(Corruption)
-keep if !missing(GDP_Per_Capita)
-
-scatter GDP_Per_Capita Corruption, title("GDP per Capita and Corruption")
-
-regress GDP_Per_Capita Corruption
-est store Corruption_GDP_per_capita_1
-
-generate log_gdp_per_capita = ln(GDP_Per_Capita)
-scatter log_gdp_per_capita Corruption, title("Log GDP perCapita and Corruption")
-
-regress log_gdp_per_capita Corruption
-est store Corruption_log_GDP_per_capita_1
-
-* table for regressions involving GDP Per Capita and Corruption
-estimates table Corruption_GDP_per_capita_1, b(%9.3f) se stats(r2)
-estimates table Corruption_log_GDP_per_capita_1, b(%9.3f) se stats(r2)
-
-* investigating relationship between Corruption and GDP Growth
-use "df_all_features.dta", clear
-
-keep if !missing(Corruption)
-keep if !missing(GDP_Growth)
-
-scatter GDP_Growth Corruption, title("GDP per Capita and Corruption")
-
-regress GDP_Growth Corruption
-est store Corruption_GDP_Growth_1
-
-* table for regressions involving GDP Growth and Corruption
-estimates table Corruption_GDP_Growth_1, b(%9.3f) se stats(r2)
+estimates table Pol_Risk_Ln_GDP_1 Pol_Risk_Ln_GDP_2, b(%9.3f) se stats(r2)
