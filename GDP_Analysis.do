@@ -7,14 +7,14 @@ keep if !missing(GDP)
 
 * relationship of GDP and Composite
 scatter GDP Composite, title("Real GDP and Political Risk")
-regress GDP Composite
+regress GDP Composite, robust
 est store Pol_Risk_GDP_1
 
 * with fixed time effects
 encode Country, gen(country_id)
 xtset country_id Year
 
-xtreg GDP Composite
+xtreg GDP Composite, robust
 est store Pol_Risk_GDP_2
 
 * Controlling for things for future study
@@ -26,7 +26,8 @@ est store Pol_Risk_GDP_2
 // regress GDP Composite Corruption
 // est store Pol_Risk_GDP_3
 
-estimates table Pol_Risk_GDP_1 Pol_Risk_GDP_2, b(%9.3f) se stats(r2)
+esttab Pol_Risk_GDP_1 Pol_Risk_GDP_2 using GDP_analysis_base_table1.html, ///
+		wrap se r2 scalar(rss) obslast nobaselevels
 
 * ---------------------------------------------------------------------------- *
 
@@ -45,4 +46,5 @@ est store Pol_Risk_Ln_GDP_2
 // est store Corruption_Ln_GDP_1
 
 * table for regressions involving Log GDP and Corruption
-estimates table Pol_Risk_Ln_GDP_1 Pol_Risk_Ln_GDP_2, b(%9.3f) se stats(r2)
+esttab Pol_Risk_Ln_GDP_1 Pol_Risk_Ln_GDP_2 using GDP_analysis_base_table2.html, ///
+		wrap se r2 scalar(rss) obslast nobaselevels
