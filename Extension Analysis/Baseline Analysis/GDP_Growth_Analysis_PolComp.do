@@ -15,10 +15,12 @@ encode Country, gen(country_id)
 xtset country_id Year
 
 * with controls for entity and time effects
-xtreg GDP_Growth Composite
+xtreg GDP_Growth Composite, fe cluster(country_id)
 est store Pol_Risk_GDP_Growth_2
 
-estimates table Pol_Risk_GDP_Growth_1 Pol_Risk_GDP_Growth_2, b(%9.3f) se stats(r2)
+esttab Pol_Risk_GDP_Growth_1 Pol_Risk_GDP_Growth_2 ///
+		using composite_gdp_growth_baseline.html, replace ///
+		wrap se r2 scalar(rss) obslast nobaselevels
 
 * ---------------------------------------------------------------------------- *
 
@@ -30,8 +32,10 @@ regress log_gdp_growth Composite
 est store Pol_Risk_Ln_GDP_Growth_1
 
 * with controls for entity and time effects
-xtreg log_gdp_growth Composite
+xtreg log_gdp_growth Composite, fe cluster(country_id)
 est store Pol_Risk_Ln_GDP_Growth_2
 
 * table for regressions involving GDP Per Capita and Corruption
-estimates table Pol_Risk_Ln_GDP_Growth_1 Pol_Risk_Ln_GDP_Growth_2, b(%9.3f) se stats(r2)
+esttab Pol_Risk_Ln_GDP_Growth_1 Pol_Risk_Ln_GDP_Growth_2 ///
+		using composite_log_gdp_growth_baseline.html, replace ///
+		wrap se r2 scalar(rss) obslast nobaselevels

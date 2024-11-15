@@ -14,19 +14,12 @@ est store Pol_Risk_GDP_1
 encode Country, gen(country_id)
 xtset country_id Year
 
-xtreg GDP Composite
+xtreg GDP Composite, fe cluster(country_id)
 est store Pol_Risk_GDP_2
 
-* Controlling for things for future study
-// scatter GDP Corruption, title("Real GDP and Corruption Index")
-// regress GDP Corruption
-// est store Corruption_GDP_1
-
-* controlling for corruption
-// regress GDP Composite Corruption
-// est store Pol_Risk_GDP_3
-
-estimates table Pol_Risk_GDP_1 Pol_Risk_GDP_2, b(%9.3f) se stats(r2)
+esttab Pol_Risk_GDP_1 Pol_Risk_GDP_2 ///
+		using composite_gdp_baseline.html, replace ///
+		wrap se r2 scalar(rss) obslast nobaselevels
 
 * ---------------------------------------------------------------------------- *
 
@@ -38,11 +31,10 @@ regress log_gdp Composite
 est store Pol_Risk_Ln_GDP_1
 
 * with control for entity and time effects
-xtreg log_gdp Composite
+xtreg log_gdp Composite, fe cluster(country_id)
 est store Pol_Risk_Ln_GDP_2
 
-// regress log_gdp Corruption
-// est store Corruption_Ln_GDP_1
-
-* table for regressions involving Log GDP and Corruption
-estimates table Pol_Risk_Ln_GDP_1 Pol_Risk_Ln_GDP_2, b(%9.3f) se stats(r2)
+* table for regressions involving Log GDP
+esttab Pol_Risk_Ln_GDP_1 Pol_Risk_Ln_GDP_2 ///
+		using composite_log_gdp_baseline.html, replace ///
+		wrap se r2 scalar(rss) obslast nobaselevels

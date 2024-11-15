@@ -1,4 +1,8 @@
 Variables in df_all_features
+- Government stability
+- Internal Conflict
+- Investment Profile
+- Socioeconomic Conditions
 - Budget Balance Risk
 - Bureaucracy Quality
 - CAXGS (Current Account as % of Exports of Goods and Services)
@@ -20,3 +24,14 @@ Variables in df_all_features
 - Military in Politics
 - Population
 - Religious Tension
+
+Control Variables (Also in df_all_features)
+- Population
+- CAXGS
+- Budget Balance Risk
+- Current Account
+- Debt Service
+- Exchange Rate
+- Foreign Debt
+- Inflation
+- International Liquidity
