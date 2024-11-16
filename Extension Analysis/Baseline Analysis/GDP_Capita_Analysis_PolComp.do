@@ -8,7 +8,7 @@ keep if !missing(GDP_Per_Capita)
 
 * relationship of GDP and Composite
 scatter GDP_Per_Capita Composite, title("GDP Per Capita and Political Risk")
-regress GDP_Per_Capita Composite
+regress GDP_Per_Capita Composite, robust
 est store Pol_Risk_GDP_Capita_1
 
 * with fixed time effects
@@ -29,7 +29,7 @@ esttab Pol_Risk_GDP_Capita_1 Pol_Risk_GDP_Capita_2 ///
 generate log_gdp_per_capita = ln(GDP_Per_Capita)
 scatter log_gdp_per_capita Composite, title("Log GDP Per Capita and Composite")
 
-regress log_gdp_per_capita Composite
+regress log_gdp_per_capita Composite, robust
 est store Pol_Risk_Ln_GDP_Capita_1
 
 * with controls for entity and time effects

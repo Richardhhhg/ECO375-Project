@@ -7,7 +7,7 @@ keep if !missing(GDP_Growth)
 
 * relationship of GDP Growth and Composite
 scatter GDP_Growth Composite, title("GDP Growth and Political Risk")
-regress GDP_Growth Composite
+regress GDP_Growth Composite, robust
 est store Pol_Risk_GDP_Growth_1
 
 * with fixed time effects
@@ -28,7 +28,7 @@ esttab Pol_Risk_GDP_Growth_1 Pol_Risk_GDP_Growth_2 ///
 generate log_gdp_growth = ln(GDP_Growth)
 scatter log_gdp_growth Composite, title("Log GDP Growth and Composite")
 
-regress log_gdp_growth Composite
+regress log_gdp_growth Composite, robust
 est store Pol_Risk_Ln_GDP_Growth_1
 
 * with controls for entity and time effects
