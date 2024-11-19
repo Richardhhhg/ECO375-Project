@@ -11,7 +11,7 @@ use "DATA/concatenated/df_all_features.dta", clear
 // egen missing_count = rowmiss(Population CAXGS Budget_Balanace CACC DebtServ ///
 // 						  Exchange_Rate Foreign_Debt Inflation ///
 // 						  International_Liquidity)
-gen controls = missing_count == 0
+// gen controls = missing_count == 0
 
 * No Control No Fixed Effects
 regress GDP Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -34,7 +34,7 @@ xtset country_id Year
 xtreg GDP Government_Stability Socioeconomic_Conditions Investment_Profile ///
 		Internal_Conflict External_Conflict Corruption Military_Politic ///
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
-		Bureaucracy_Quality, fe cluster(country_id)
+		Bureaucracy_Quality, fe
 est store spec3
 
 * Yes Control Yes Fixed Effects
@@ -42,7 +42,7 @@ xtreg GDP Government_Stability Socioeconomic_Conditions Investment_Profile ///
 		Internal_Conflict External_Conflict Corruption Military_Politic ///
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
 		Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
-		Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe cluster(country_id)
+		Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe
 est store spec4
 		
 esttab spec1 spec2 spec3 spec4 ///
@@ -74,7 +74,7 @@ est store spec6
 xtreg log_gdp Government_Stability Socioeconomic_Conditions Investment_Profile ///
 		Internal_Conflict External_Conflict Corruption Military_Politic ///
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
-		Bureaucracy_Quality, fe cluster(country_id)
+		Bureaucracy_Quality, fe
 est store spec7
 
 * Yes Control Yes Fixed Effects
@@ -82,7 +82,7 @@ xtreg log_gdp Government_Stability Socioeconomic_Conditions Investment_Profile /
 		Internal_Conflict External_Conflict Corruption Military_Politic ///
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
 		Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
-		Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe cluster(country_id)
+		Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe
 est store spec8
 
 esttab spec5 spec6 spec7 spec8 ///

@@ -1,5 +1,6 @@
 * importing data
-use "df_all_features.dta", clear
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
 
 * removing missing values
 keep if !missing(Composite)
@@ -14,7 +15,7 @@ est store Pol_Risk_GDP_1
 encode Country, gen(country_id)
 xtset country_id Year
 
-xtreg GDP Composite, fe cluster(country_id)
+xtreg GDP Composite, fe
 est store Pol_Risk_GDP_2
 
 esttab Pol_Risk_GDP_1 Pol_Risk_GDP_2 ///
@@ -31,7 +32,7 @@ regress log_gdp Composite, robust
 est store Pol_Risk_Ln_GDP_1
 
 * with control for entity and time effects
-xtreg log_gdp Composite, fe cluster(country_id)
+xtreg log_gdp Composite, fe
 est store Pol_Risk_Ln_GDP_2
 
 * table for regressions involving Log GDP

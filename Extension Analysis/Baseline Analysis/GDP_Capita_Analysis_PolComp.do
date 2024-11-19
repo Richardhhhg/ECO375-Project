@@ -1,6 +1,7 @@
 * #### investigating relationship between Corruption and GDP per Capita #######
 * Resetting Everything Each time Since Potentially Different Missing Vars
-use "df_all_features.dta", clear
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
 
 // keep if !missing(Corruption)
 keep if !missing(Composite)
@@ -16,7 +17,7 @@ encode Country, gen(country_id)
 xtset country_id Year
 
 * with controls for entity and time effects
-xtreg GDP_Per_Capita Composite, fe cluster(country_id)
+xtreg GDP_Per_Capita Composite, fe
 est store Pol_Risk_GDP_Capita_2
 
 esttab Pol_Risk_GDP_Capita_1 Pol_Risk_GDP_Capita_2 ///
@@ -33,7 +34,7 @@ regress log_gdp_per_capita Composite, robust
 est store Pol_Risk_Ln_GDP_Capita_1
 
 * with controls for entity and time effects
-xtreg log_gdp_per_capita Composite, fe cluster(country_id)
+xtreg log_gdp_per_capita Composite, fe
 est store Pol_Risk_Ln_GDP_Capita_2
 
 * table for regressions involving GDP Per Capita and Corruption
