@@ -23,7 +23,8 @@ estadd local fixed "Yes", replace
 esttab Pol_Risk_GDP_1 Pol_Risk_GDP_2 ///
 		using composite_gdp_baseline.html, replace ///
 		wrap se r2 scalar(rss) obslast nobaselevels ///
-		s(fixed N, label("Fixed Effects")) ///
+		s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
+		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects")
 
 * ---------------------------------------------------------------------------- *
@@ -44,7 +45,8 @@ estadd local fixed "Yes", replace
 * table for regressions involving Log GDP
 esttab Pol_Risk_Ln_GDP_1 Pol_Risk_Ln_GDP_2 ///
 		using composite_log_gdp_baseline.html, replace ///
-		wrap se r2 scalar(rss) obslast nobaselevels
-		s(fixed N, label("Fixed Effects")) ///
+		wrap se r2 scalar(rss) obslast nobaselevels ///
+		s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
+		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects")
 
