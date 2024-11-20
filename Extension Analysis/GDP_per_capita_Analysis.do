@@ -1,10 +1,6 @@
 * Loading Data also encoding for fixed effects later on
 setroot
 use "DATA/concatenated/df_all_features.dta", clear
-// egen missing_count = rowmiss(Population CAXGS Budget_Balanace CACC DebtServ ///
-// 						  Exchange_Rate Foreign_Debt Inflation ///
-// 						  International_Liquidity)
-// gen controls = missing_count == 0
 
 * No Control No Fixed Effects
 regress GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -12,6 +8,8 @@ regress GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
 		Bureaucracy_Quality, robust
 est store spec1
+estadd local fixed "No", replace
+estadd local Controls "No", replace
 
 * With Control No Fixed Effects
 regress GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -20,6 +18,8 @@ regress GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_
 		Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
 		Exchange_Rate Foreign_Debt Inflation International_Liquidity, robust
 est store spec2
+estadd local fixed "No", replace
+estadd local Controls "Yes", replace
 
 * No Control Yes Fixed Effects
 encode Country, gen(country_id)
@@ -29,6 +29,8 @@ xtreg GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Pr
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
 		Bureaucracy_Quality, fe cluster(country_id)
 est store spec3
+estadd local fixed "Yes", replace
+estadd local Controls "No", replace
 
 * Yes Control Yes Fixed Effects
 xtreg GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -37,11 +39,18 @@ xtreg GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Pr
 		Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
 		Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe cluster(country_id)
 est store spec4
+estadd local fixed "Yes", replace
+estadd local Controls "Yes", replace
 		
 esttab spec1 spec2 spec3 spec4 ///
 		using gdp_capita_table.html, replace ///
 		wrap se r2 scalar(rss) obslast nobaselevels ///
-// 		indicate("Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity")
+		s(fixed Controls N, label("Fixed Effects")) ///
+		addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
+		keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
+		Internal_Conflict External_Conflict Corruption Military_Politic ///
+		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+		Bureaucracy_Quality)
 		
 //
 // With Log of GDP
@@ -54,6 +63,8 @@ regress log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
 		Bureaucracy_Quality, robust
 est store spec5
+estadd local fixed "No", replace
+estadd local Controls "No", replace
 
 * Yes Control No Fixed Effects
 regress log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -62,6 +73,8 @@ regress log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_
 		Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
 		Exchange_Rate Foreign_Debt Inflation International_Liquidity, robust
 est store spec6
+estadd local fixed "No", replace
+estadd local Controls "Yes", replace
 
 * No Control Yes Fixed Effects
 xtreg log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -69,6 +82,8 @@ xtreg log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Pr
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
 		Bureaucracy_Quality, fe cluster(country_id)
 est store spec7
+estadd local fixed "Yes", replace
+estadd local Controls "No", replace
 
 * Yes Control Yes Fixed Effects
 xtreg log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -77,7 +92,15 @@ xtreg log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Pr
 		Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
 		Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe cluster(country_id)
 est store spec8
+estadd local fixed "Yes", replace
+estadd local Controls "Yes", replace
 
 esttab spec5 spec6 spec7 spec8 ///
 		using log_gdp_capita_table.html, replace ///
-		wrap se r2 scalar(rss) obslast nobaselevels
+		wrap se r2 scalar(rss) obslast nobaselevels ///
+		s(fixed Controls N, label("Fixed Effects")) ///
+		addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
+		keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
+		Internal_Conflict External_Conflict Corruption Military_Politic ///
+		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+		Bureaucracy_Quality)
