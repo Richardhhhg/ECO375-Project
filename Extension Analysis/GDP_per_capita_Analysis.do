@@ -1,5 +1,6 @@
 * Loading Data also encoding for fixed effects later on
-use "df_all_features.dta", clear
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
 // egen missing_count = rowmiss(Population CAXGS Budget_Balanace CACC DebtServ ///
 // 						  Exchange_Rate Foreign_Debt Inflation ///
 // 						  International_Liquidity)

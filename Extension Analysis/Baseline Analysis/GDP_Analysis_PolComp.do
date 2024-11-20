@@ -1,5 +1,6 @@
 * importing data
-use "df_all_features.dta", clear
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
 
 * removing missing values
 keep if !missing(Composite)

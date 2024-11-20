@@ -1,3 +1,4 @@
-use "df_all_features.dta", clear
-estpost summarize
-esttab summary_statistics using summary_stats.html, replace
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
+generate log_gdp_capita = ln(GDP_Per_Capita)
+asdoc sum Composite Government_Stability Socioeconomic_Condition Internal_Conflict Investment_Profile Internal_Conflict External_Conflict Corruption Military_Politic Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability Bureaucracy_Quality  log_gdp_capita GDP_Growth, replace

@@ -1,6 +1,7 @@
 * #### investigating relationship between Corruption and GDP per Capita #######
 * Resetting Everything Each time Since Potentially Different Missing Vars
-use "df_all_features.dta", clear
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
 
 // keep if !missing(Corruption)
 keep if !missing(Composite)
