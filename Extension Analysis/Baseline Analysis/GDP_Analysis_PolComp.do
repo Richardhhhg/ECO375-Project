@@ -7,7 +7,7 @@ keep if !missing(Composite)
 keep if !missing(GDP)
 
 * relationship of GDP and Composite
-scatter GDP Composite, title("Real GDP and Political Risk")
+// scatter GDP Composite, title("Real GDP and Political Risk")
 regress GDP Composite, robust
 est store Pol_Risk_GDP_1
 estadd local fixed "No", replace
@@ -23,14 +23,15 @@ estadd local fixed "Yes", replace
 esttab Pol_Risk_GDP_1 Pol_Risk_GDP_2 ///
 		using composite_gdp_baseline.html, replace ///
 		wrap se r2 scalar(rss) obslast nobaselevels ///
-		s(fixed N, label("Fixed Effects")) ///
+		s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
+		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects")
 
 * ---------------------------------------------------------------------------- *
 
 * With Log of GDP
 generate log_gdp = ln(GDP)
-scatter log_gdp Composite, title("Log GDP and Political Risk")
+// scatter log_gdp Composite, title("Log GDP and Political Risk")
 
 regress log_gdp Composite, robust
 est store Pol_Risk_Ln_GDP_1
@@ -44,7 +45,8 @@ estadd local fixed "Yes", replace
 * table for regressions involving Log GDP
 esttab Pol_Risk_Ln_GDP_1 Pol_Risk_Ln_GDP_2 ///
 		using composite_log_gdp_baseline.html, replace ///
-		wrap se r2 scalar(rss) obslast nobaselevels
-		s(fixed N, label("Fixed Effects")) ///
+		wrap se r2 scalar(rss) obslast nobaselevels ///
+		s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
+		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects")
 
