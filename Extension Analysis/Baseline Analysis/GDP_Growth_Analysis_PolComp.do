@@ -28,26 +28,3 @@ esttab Pol_Risk_GDP_Growth_1 Pol_Risk_GDP_Growth_2 ///
 		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects")
 		
-
-* ---------------------------------------------------------------------------- *
-
-* With Log GDP Growth
-generate log_gdp_growth = ln(GDP_Growth)
-// scatter log_gdp_growth Composite, title("Log GDP Growth and Composite")
-
-regress log_gdp_growth Composite, robust
-est store Pol_Risk_Ln_GDP_Growth_1
-estadd local fixed "No", replace
-
-* with controls for entity and time effects
-xtreg log_gdp_growth Composite, fe
-est store Pol_Risk_Ln_GDP_Growth_2
-estadd local fixed "Yes", replace
-
-* table for regressions involving GDP Per Capita and Corruption
-esttab Pol_Risk_Ln_GDP_Growth_1 Pol_Risk_Ln_GDP_Growth_2 ///
-		using composite_log_gdp_growth_baseline.html, replace ///
-		wrap se r2 scalar(rss) obslast nobaselevels ///
-		s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
-		<i>N<i>)) ///
-		addnotes("Fixed Effects include time and entity effects")
