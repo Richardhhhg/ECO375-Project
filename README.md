@@ -1,2 +1,2 @@
 # ECO375-Project
-ECO375 Cool Data Stuff
+In this project, we investigate the relationship between various political risk factors and GDP metrics including ln real GDP per capita and GDP Growth.
