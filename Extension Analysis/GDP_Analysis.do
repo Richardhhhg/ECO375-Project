@@ -1,5 +1,6 @@
 // 
 //PURPOSE OF THIS FILE
+// OUTDATED, WILL NOT BE USED FOR ANALYSIS
 // This File is mean to look at the individual components of the polrisk composite
 // and find how that relates to GDP and log GDP, see GDP_Analysis_PolComp
 // for relation of just PolComp and GDP/LogGDP
