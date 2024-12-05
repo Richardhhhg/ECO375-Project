@@ -1,6 +1,7 @@
 * #### investigating relationship between Composite and GDP Growth #######
 setroot
 use "DATA/concatenated/df_all_features.dta", clear
+keep if GDP_Growth < 150
 
 // keep if !missing(Corruption)
 keep if !missing(Composite)

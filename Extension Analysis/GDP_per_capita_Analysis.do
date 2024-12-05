@@ -45,7 +45,7 @@ estadd local Controls "Yes", replace
 esttab spec1 spec2 spec3 spec4 ///
 		using gdp_capita_table.html, replace ///
 		wrap se r2 scalar(rss) obslast nobaselevels ///
-		s(fixed Controls r2 rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
+		s(fixed Controls r2_a rss N, label("Fixed Effects" "Controls" <i>"Adjusted R"<i><sup>2</sup> <i>rss<i> ///
 		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
 		keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -99,7 +99,7 @@ estadd local Controls "Yes", replace
 esttab spec5 spec6 spec7 spec8 ///
 		using log_gdp_capita_table.html, replace ///
 		wrap se r2 scalar(rss) obslast nobaselevels ///
-		s(fixed Controls r2 rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
+		s(fixed Controls r2_a rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
 		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
 		keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///

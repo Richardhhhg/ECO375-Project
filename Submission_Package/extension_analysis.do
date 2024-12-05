@@ -1,7 +1,22 @@
+* DATA CLEANING AND TRANSFORMING OMITTED DUE TO CODE BEING IN PYTHON
+
+* summary statistics
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
+generate log_gdp_capita = ln(GDP_Per_Capita)
+asdoc sum Composite Government_Stability Socioeconomic_Condition Internal_Conflict Investment_Profile Internal_Conflict External_Conflict Corruption Military_Politic Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability Bureaucracy_Quality  log_gdp_capita GDP_Growth, replace
+
+* making correlation matrix
+setroot
+use "DATA/concatenated/df_all_features.dta", clear
+keep Composite Government_Stability Socioeconomic_Conditions Investment_Profile Internal_Conflict External_Conflict Corruption Military_Politic Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability Bureaucracy_Quality GDP_Per_Capita GDP_Growth
+// keep list
+asdoc cor, replace
+
 * #### investigating relationship between Corruption and GDP per Capita #######
 * Resetting Everything Each time Since Potentially Different Missing Vars
 setroot
-use "df_all_features.dta", clear
+use "DATA/concatenated/df_all_features.dta", clear
 
 // keep if !missing(Corruption)
 keep if !missing(Composite)
@@ -54,7 +69,8 @@ esttab Pol_Risk_Ln_GDP_Capita_1 Pol_Risk_Ln_GDP_Capita_2 ///
 
 * #### investigating relationship between Composite and GDP Growth #######
 setroot
-use "df_all_features.dta", clear
+use "DATA/concatenated/df_all_features.dta", clear
+keep if GDP_Growth < 150
 
 // keep if !missing(Corruption)
 keep if !missing(Composite)
@@ -84,7 +100,7 @@ esttab Pol_Risk_GDP_Growth_1 Pol_Risk_GDP_Growth_2 ///
 
 * Loading Data also encoding for fixed effects later on
 setroot
-use "df_all_features.dta", clear
+use "DATA/concatenated/df_all_features.dta", clear
 
 * No Control No Fixed Effects
 regress GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -129,7 +145,7 @@ estadd local Controls "Yes", replace
 esttab spec1 spec2 spec3 spec4 ///
 		using gdp_capita_table.html, replace ///
 		wrap se r2 scalar(rss) obslast nobaselevels ///
-		s(fixed Controls r2 rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
+		s(fixed Controls r2_a rss N, label("Fixed Effects" "Controls" <i>"Adjusted R"<i><sup>2</sup> <i>rss<i> ///
 		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
 		keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -138,7 +154,7 @@ esttab spec1 spec2 spec3 spec4 ///
 		Bureaucracy_Quality)
 		
 //
-// With Log of GDP Per Capita
+// With Log of GDP
 //
 generate log_gdp_capita = ln(GDP_Per_Capita)
 
@@ -183,7 +199,7 @@ estadd local Controls "Yes", replace
 esttab spec5 spec6 spec7 spec8 ///
 		using log_gdp_capita_table.html, replace ///
 		wrap se r2 scalar(rss) obslast nobaselevels ///
-		s(fixed Controls r2 rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
+		s(fixed Controls r2_a rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
 		<i>N<i>)) ///
 		addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
 		keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
@@ -191,9 +207,14 @@ esttab spec5 spec6 spec7 spec8 ///
 		Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
 		Bureaucracy_Quality)
 
+//
+// GDP GROWTH ANALYSIS
+//
 * Loading Data also encoding for fixed effects later on
 setroot
-use "df_all_features.dta", clear
+use "DATA/concatenated/df_all_features.dta", clear
+keep if GDP_Growth < 150
+* Note: Also dropped all country years that don'have data for GDP_Growth
 
 * No Control No Fixed Effects
 regress GDP_Growth Government_Stability Socioeconomic_Conditions Investment_Profile ///

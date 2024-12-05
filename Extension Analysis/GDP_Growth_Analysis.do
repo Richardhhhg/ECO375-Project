@@ -1,6 +1,8 @@
 * Loading Data also encoding for fixed effects later on
 setroot
 use "DATA/concatenated/df_all_features.dta", clear
+keep if GDP_Growth < 150
+* Note: Also dropped all country years that don'have data for GDP_Growth
 
 * No Control No Fixed Effects
 regress GDP_Growth Government_Stability Socioeconomic_Conditions Investment_Profile ///
