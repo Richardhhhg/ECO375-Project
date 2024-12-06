@@ -1,0 +1,1130 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project/Submission_Package/stata_log.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Dec 2024, 18:51:54
+
+{com}. do "/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project/Submission_Package/extension_analysis.do"
+{txt}
+{com}. * DATA CLEANING AND TRANSFORMING OMITTED DUE TO CODE BEING IN PYTHON
+. 
+. * summary statistics
+. setroot
+{txt}{bf:setroot} is searching for the root project path of "{res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project{txt}"
+{res}{txt}root project path found; setting {res}"global root = /Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project" 
+{txt}
+{com}. use "DATA/concatenated/df_all_features.dta", clear
+{txt}
+{com}. generate log_gdp_capita = ln(GDP_Per_Capita)
+{txt}(115 missing values generated)
+
+{com}. asdoc sum Composite Government_Stability Socioeconomic_Condition Internal_Conflict Investment_Profile Internal_Conflict External_Conflict Corruption Military_Politic Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability Bureaucracy_Quality  log_gdp_capita GDP_Growth, replace
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}Composite {c |}{res}      4,331    66.72852    12.95405      13.04      95.42
+{txt}Government~y {c |}{res}      4,357    7.429123    1.918164        .67         12
+{txt}Socioecono~s {c |}{res}      4,357    5.709566    2.302323          0         11
+{txt}Internal_C~t {c |}{res}      4,357    8.788175    2.357101          0         12
+{txt}Investment~e {c |}{res}      4,357    7.586443     2.41496          0         12
+{txt}{hline 13}{c +}{hline 57}
+Internal_C~t {c |}{res}      4,357    8.788175    2.357101          0         12
+{txt}External_C~t {c |}{res}      4,357    9.696234    1.948293          0         12
+{txt}{space 2}Corruption {c |}{res}      4,357    2.980179    1.345264          0          6
+{txt}Military_P~c {c |}{res}      4,357    3.800585    1.772898          0          6
+{txt}Religious_~n {c |}{res}      4,357    4.579171     1.34409          0          6
+{txt}{hline 13}{c +}{hline 57}
+{space 3}Law_Order {c |}{res}      4,357    3.663746    1.452272          0          6
+{txt}Ethnic_Ten~n {c |}{res}      4,357    3.932463    1.385176          0          6
+{txt}Democratic~y {c |}{res}      4,357    3.974604    1.614811          0          6
+{txt}Bureaucrac~y {c |}{res}      4,357    2.198377    1.194089          0          4
+{txt}log_gdp_ca~a {c |}{res}      4,487    8.228653    1.648533   3.128967   11.80344
+{txt}{hline 13}{c +}{hline 57}
+{space 2}GDP_Growth {c |}{res}      4,495    3.374567    6.649979  -64.04711   153.4926
+Click to Open File:  {browse "Myfile.doc"}
+{txt}
+{com}. 
+. * making correlation matrix
+. setroot
+{txt}{bf:setroot} is searching for the root project path of "{res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project{txt}"
+{res}{txt}root project path found; setting {res}"global root = /Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project" 
+{txt}
+{com}. use "DATA/concatenated/df_all_features.dta", clear
+{txt}
+{com}. keep Composite Government_Stability Socioeconomic_Conditions Investment_Profile Internal_Conflict External_Conflict Corruption Military_Politic Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability Bureaucracy_Quality GDP_Per_Capita GDP_Growth
+{txt}
+{com}. // keep list
+. asdoc cor, replace
+{txt}(obs=4,290)
+
+             {c |} Bureau~y Compos~e Corrup~n Democr~y Ethnic~n Extern~t Law_Or~r Milita~c Religi~n GDP_Pe~a GDP_Gr~h Govern~y Socioe~s Intern~t Invest~e
+{hline 13}{c +}{hline 135}
+Bureaucrac~y {c |}{res}   1.0000
+   {txt}Composite {c |}{res}   0.7334   1.0000
+  {txt}Corruption {c |}{res}   0.7098   0.5989   1.0000
+{txt}Democratic~y {c |}{res}   0.6364   0.5987   0.5471   1.0000
+{txt}Ethnic_Ten~n {c |}{res}   0.3228   0.5281   0.3519   0.2524   1.0000
+{txt}External_C~t {c |}{res}   0.3798   0.6113   0.3565   0.4446   0.4018   1.0000
+   {txt}Law_Order {c |}{res}   0.6687   0.7458   0.6745   0.4879   0.4739   0.4337   1.0000
+{txt}Military_P~c {c |}{res}   0.6834   0.7266   0.6215   0.6263   0.4612   0.4818   0.6676   1.0000
+{txt}Religious_~n {c |}{res}   0.2902   0.3951   0.3659   0.3321   0.4410   0.3743   0.3281   0.4646   1.0000
+{txt}GDP_Per_Ca~a {c |}{res}   0.6338   0.6068   0.5628   0.4625   0.2929   0.2320   0.6077   0.5235   0.2480   1.0000
+  {txt}GDP_Growth {c |}{res}  -0.0518   0.0582  -0.0683  -0.0500  -0.0151   0.0077  -0.0042  -0.0494  -0.0519  -0.0560   1.0000
+{txt}Government~y {c |}{res}   0.2027   0.5152   0.1276   0.1202   0.2655   0.2957   0.3487   0.2177   0.1155   0.1332   0.1504   1.0000
+{txt}Socioecono~s {c |}{res}   0.7123   0.7216   0.6176   0.4434   0.3433   0.3070   0.6380   0.6153   0.2709   0.6641  -0.0064   0.2093   1.0000
+{txt}Internal_C~t {c |}{res}   0.5115   0.7677   0.4712   0.4905   0.5798   0.6461   0.6625   0.6484   0.4797   0.3906   0.0263   0.4353   0.4799   1.0000
+{txt}Investment~e {c |}{res}   0.5388   0.7493   0.3402   0.5228   0.2889   0.3552   0.5014   0.5355   0.2134   0.5663   0.0247   0.4817   0.6209   0.4974   1.0000
+
+{txt}{p 0 4 2}
+(file {bf}
+Myfile.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "Myfile.doc"}
+
+{com}. 
+. * #### investigating relationship between Corruption and GDP per Capita #######
+. * Resetting Everything Each time Since Potentially Different Missing Vars
+. setroot
+{txt}{bf:setroot} is searching for the root project path of "{res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project{txt}"
+{res}{txt}root project path found; setting {res}"global root = /Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project" 
+{txt}
+{com}. use "DATA/concatenated/df_all_features.dta", clear
+{txt}
+{com}. 
+. // keep if !missing(Corruption)
+. keep if !missing(Composite)
+{txt}(271 observations deleted)
+
+{com}. keep if !missing(GDP_Per_Capita)
+{txt}(34 observations deleted)
+
+{com}. 
+. * relationship of GDP and Composite
+. // scatter GDP_Per_Capita Composite, title("GDP Per Capita and Political Risk")
+. regress GDP_Per_Capita Composite, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,297
+                                                {txt}F(1, 4295)        =  {res}  1345.72
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.3680
+                                                {txt}Root MSE          =    {res}  14265
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}GDP_Per_Ca~a{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 3}Composite {c |}{col 14}{res}{space 2} 848.9288{col 26}{space 2}  23.1416{col 37}{space 1}   36.68{col 46}{space 3}0.000{col 54}{space 4} 803.5594{col 67}{space 3} 894.2983
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-44873.55{col 26}{space 2} 1443.102{col 37}{space 1}  -31.10{col 46}{space 3}0.000{col 54}{space 4}-47702.78{col 67}{space 3}-42044.33
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store Pol_Risk_GDP_Capita_1
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. 
+. * with fixed time effects
+. encode Country, gen(country_id)
+{txt}
+{com}. xtset country_id Year
+{res}
+{col 1}{txt:Panel variable: }{res:country_id}{txt: (unbalanced)}
+{p 1 16 2}{txt:Time variable: }{res:Year}{txt:, }{res:{bind:1984}}{txt: to }{res:{bind:2022}}{p_end}
+{txt}{col 10}Delta: {res}1 unit
+{txt}
+{com}. 
+. * with controls for entity and time effects
+. xtreg GDP_Per_Capita Composite, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,297
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       118
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.0050{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.6374{col 63}{txt}avg{col 67}={col 69}{res}      36.4
+{txt}     Overall = {res}0.3680{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}1{txt}, {res}117{txt}){col 67}={col 70}{res}     4.22
+{txt}corr(u_i, Xb) = {res}0.6619{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0421
+
+{txt}{ralign 78:(Std. err. adjusted for {res:118} clusters in {res:country_id})}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}GDP_Per_Ca~a{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 3}Composite {c |}{col 14}{res}{space 2} 92.04045{col 26}{space 2} 44.79507{col 37}{space 1}    2.05{col 46}{space 3}0.042{col 54}{space 4} 3.326152{col 67}{space 3} 180.7547
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 5765.054{col 26}{space 2} 2996.954{col 37}{space 1}    1.92{col 46}{space 3}0.057{col 54}{space 4}-170.2572{col 67}{space 3} 11700.37
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+     sigma_u {c |} {res} 14416.554
+     {txt}sigma_e {c |} {res} 9219.3482
+         {txt}rho {c |} {res} .70974493{txt}   (fraction of variance due to u_i)
+{hline 13}{c BT}{hline 64}
+
+{com}. est store Pol_Risk_GDP_Capita_2
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. 
+. esttab Pol_Risk_GDP_Capita_1 Pol_Risk_GDP_Capita_2 ///
+>                 using composite_gdp_capita_baseline.html, replace ///
+>                 wrap se r2 scalar(rss) obslast nobaselevels ///
+>                 s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
+>                 <i>N<i>)) ///
+>                 addnotes("Fixed Effects include time and entity effects")
+{res}{txt}{p 0 4 2}
+(file {bf}
+composite_gdp_capita_baseline.html{rm}
+not found)
+{p_end}
+(output written to {browse  `"composite_gdp_capita_baseline.html"'})
+
+{com}. 
+. * ---------------------------------------------------------------------------- *
+. 
+. * With Log GDP Per Capita
+. generate log_gdp_per_capita = ln(GDP_Per_Capita)
+{txt}
+{com}. // scatter log_gdp_per_capita Composite, title("Log GDP Per Capita and Composite")
+. 
+. regress log_gdp_per_capita Composite, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,297
+                                                {txt}F(1, 4295)        =  {res}  5473.75
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.6155
+                                                {txt}Root MSE          =    {res} 1.0181
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}log_gdp_pe~a{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 3}Composite {c |}{col 14}{res}{space 2} .1004554{col 26}{space 2} .0013578{col 37}{space 1}   73.98{col 46}{space 3}0.000{col 54}{space 4} .0977934{col 67}{space 3} .1031174
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 1.536833{col 26}{space 2} .0959944{col 37}{space 1}   16.01{col 46}{space 3}0.000{col 54}{space 4} 1.348634{col 67}{space 3} 1.725031
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store Pol_Risk_Ln_GDP_Capita_1
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. 
+. * with controls for entity and time effects
+. xtreg log_gdp_per_capita Composite, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,297
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       118
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.2278{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.7448{col 63}{txt}avg{col 67}={col 69}{res}      36.4
+{txt}     Overall = {res}0.6155{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}1{txt}, {res}117{txt}){col 67}={col 70}{res}   228.56
+{txt}corr(u_i, Xb) = {res}0.6561{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{ralign 78:(Std. err. adjusted for {res:118} clusters in {res:country_id})}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}log_gdp_pe~a{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 3}Composite {c |}{col 14}{res}{space 2} .0420811{col 26}{space 2} .0027835{col 37}{space 1}   15.12{col 46}{space 3}0.000{col 54}{space 4} .0365686{col 67}{space 3} .0475936
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 5.442285{col 26}{space 2} .1862236{col 37}{space 1}   29.22{col 46}{space 3}0.000{col 54}{space 4} 5.073479{col 67}{space 3} 5.811091
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+     sigma_u {c |} {res} 1.1404256
+     {txt}sigma_e {c |} {res} .55118098
+         {txt}rho {c |} {res}   .810642{txt}   (fraction of variance due to u_i)
+{hline 13}{c BT}{hline 64}
+
+{com}. est store Pol_Risk_Ln_GDP_Capita_2
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. 
+. * table for regressions involving GDP Per Capita and Corruption
+. esttab Pol_Risk_Ln_GDP_Capita_1 Pol_Risk_Ln_GDP_Capita_2 ///
+>                 using composite_ln_gdp_capita_baseline.html, replace ///
+>                 wrap se r2 scalar(rss) obslast nobaselevels ///
+>                 s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
+>                 <i>N<i>)) ///
+>                 addnotes("Fixed Effects include time and entity effects")
+{res}{txt}{p 0 4 2}
+(file {bf}
+composite_ln_gdp_capita_baseline.html{rm}
+not found)
+{p_end}
+(output written to {browse  `"composite_ln_gdp_capita_baseline.html"'})
+
+{com}. 
+. * #### investigating relationship between Composite and GDP Growth #######
+. setroot
+{txt}{bf:setroot} is searching for the root project path of "{res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project{txt}"
+{res}{txt}root project path found; setting {res}"global root = /Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project" 
+{txt}
+{com}. use "DATA/concatenated/df_all_features.dta", clear
+{txt}
+{com}. keep if GDP_Growth < 150
+{txt}(108 observations deleted)
+
+{com}. 
+. // keep if !missing(Corruption)
+. keep if !missing(Composite)
+{txt}(181 observations deleted)
+
+{com}. keep if !missing(GDP_Growth)
+{txt}(0 observations deleted)
+
+{com}. 
+. * relationship of GDP Growth and Composite
+. // scatter GDP_Growth Composite, title("GDP Growth and Political Risk")
+. regress GDP_Growth Composite, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,313
+                                                {txt}F(1, 4311)        =  {res}     6.58
+                                                {txt}Prob > F          = {res}    0.0103
+                                                {txt}R-squared         = {res}    0.0043
+                                                {txt}Root MSE          =    {res} 6.0553
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}  GDP_Growth{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 3}Composite {c |}{col 14}{res}{space 2} .0310113{col 26}{space 2} .0120899{col 37}{space 1}    2.57{col 46}{space 3}0.010{col 54}{space 4} .0073088{col 67}{space 3} .0547137
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 1.432349{col 26}{space 2} .8613858{col 37}{space 1}    1.66{col 46}{space 3}0.096{col 54}{space 4}-.2564098{col 67}{space 3} 3.121109
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store Pol_Risk_GDP_Growth_1
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. 
+. * with fixed time effects
+. encode Country, gen(country_id)
+{txt}
+{com}. xtset country_id Year
+{res}
+{col 1}{txt:Panel variable: }{res:country_id}{txt: (unbalanced)}
+{p 1 16 2}{txt:Time variable: }{res:Year}{txt:, }{res:{bind:1984}}{txt: to }{res:{bind:2022}}{txt:, but with a gap}{p_end}
+{txt}{col 10}Delta: {res}1 unit
+{txt}
+{com}. 
+. * with controls for entity and time effects
+. xtreg GDP_Growth Composite, fe
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,313
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       118
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.0401{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.0350{col 63}{txt}avg{col 67}={col 69}{res}      36.6
+{txt}     Overall = {res}0.0043{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}1{txt}, {res}4194{txt}){col 67}={col 70}{res}   175.32
+{txt}corr(u_i, Xb) = {res}-0.6707{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  GDP_Growth{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 3}Composite {c |}{col 14}{res}{space 2} .1661713{col 26}{space 2} .0125497{col 37}{space 1}   13.24{col 46}{space 3}0.000{col 54}{space 4} .1415672{col 67}{space 3} .1907754
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-7.598866{col 26}{space 2} .8432258{col 37}{space 1}   -9.01{col 46}{space 3}0.000{col 54}{space 4}-9.252035{col 67}{space 3}-5.945697
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+     sigma_u {c |} {res} 2.6333722
+     {txt}sigma_e {c |} {res} 5.8199965
+         {txt}rho {c |} {res} .16993771{txt}   (fraction of variance due to u_i)
+{hline 13}{c BT}{hline 64}
+F test that all u_i=0: F({res}117{txt}, {res}4194{txt}) = {res}4.04{col 62}{txt}Prob > F = {res}0.0000
+{txt}
+{com}. est store Pol_Risk_GDP_Growth_2
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. 
+. esttab Pol_Risk_GDP_Growth_1 Pol_Risk_GDP_Growth_2 ///
+>                 using composite_gdp_growth_baseline.html, replace ///
+>                 wrap se r2 scalar(rss) obslast nobaselevels ///
+>                 s(fixed r2 rss N, label("Fixed Effects" <i>R<i><sup>2</sup> <i>rss<i> ///
+>                 <i>N<i>)) ///
+>                 addnotes("Fixed Effects include time and entity effects")
+{res}{txt}{p 0 4 2}
+(file {bf}
+composite_gdp_growth_baseline.html{rm}
+not found)
+{p_end}
+(output written to {browse  `"composite_gdp_growth_baseline.html"'})
+
+{com}. 
+. * Loading Data also encoding for fixed effects later on
+. setroot
+{txt}{bf:setroot} is searching for the root project path of "{res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project{txt}"
+{res}{txt}root project path found; setting {res}"global root = /Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project" 
+{txt}
+{com}. use "DATA/concatenated/df_all_features.dta", clear
+{txt}
+{com}. 
+. * No Control No Fixed Effects
+. regress GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,318
+                                                {txt}F(12, 4305)       =  {res}   243.47
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.5752
+                                                {txt}Root MSE          =    {res}  11692
+
+{txt}{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           GDP_Per_Capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2}-1490.924{col 39}{space 2} 123.1029{col 50}{space 1}  -12.11{col 59}{space 3}0.000{col 67}{space 4}-1732.269{col 80}{space 3}-1249.579
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} 1585.305{col 39}{space 2} 113.5777{col 50}{space 1}   13.96{col 59}{space 3}0.000{col 67}{space 4} 1362.634{col 80}{space 3} 1807.975
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2}  2431.04{col 39}{space 2} 124.0183{col 50}{space 1}   19.60{col 59}{space 3}0.000{col 67}{space 4} 2187.901{col 80}{space 3}  2674.18
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2}-542.2175{col 39}{space 2} 122.4312{col 50}{space 1}   -4.43{col 59}{space 3}0.000{col 67}{space 4}-782.2458{col 80}{space 3}-302.1892
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2} -676.046{col 39}{space 2} 115.6328{col 50}{space 1}   -5.85{col 59}{space 3}0.000{col 67}{space 4}-902.7459{col 80}{space 3}-449.3462
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2} 1595.137{col 39}{space 2} 186.7908{col 50}{space 1}    8.54{col 59}{space 3}0.000{col 67}{space 4} 1228.931{col 80}{space 3} 1961.343
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-616.8764{col 39}{space 2} 133.5388{col 50}{space 1}   -4.62{col 59}{space 3}0.000{col 67}{space 4}-878.6813{col 80}{space 3}-355.0715
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2} 488.0367{col 39}{space 2} 129.4567{col 50}{space 1}    3.77{col 59}{space 3}0.000{col 67}{space 4} 234.2348{col 80}{space 3} 741.8385
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} 3356.099{col 39}{space 2} 177.8208{col 50}{space 1}   18.87{col 59}{space 3}0.000{col 67}{space 4} 3007.478{col 80}{space 3} 3704.719
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2} 362.9532{col 39}{space 2} 143.8304{col 50}{space 1}    2.52{col 59}{space 3}0.012{col 67}{space 4}  80.9716{col 80}{space 3} 644.9348
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} 76.11303{col 39}{space 2} 149.7999{col 50}{space 1}    0.51{col 59}{space 3}0.611{col 67}{space 4}-217.5719{col 80}{space 3}  369.798
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2} 2356.023{col 39}{space 2} 202.4845{col 50}{space 1}   11.64{col 59}{space 3}0.000{col 67}{space 4} 1959.049{col 80}{space 3} 2752.997
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2}-17118.89{col 39}{space 2} 1023.679{col 50}{space 1}  -16.72{col 59}{space 3}0.000{col 67}{space 4}-19125.83{col 80}{space 3}-15111.95
+{txt}{hline 26}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store spec1
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. estadd local Controls "No", replace
+
+{txt}added macro:
+           e(Controls) : "{res:No}"
+
+{com}. 
+. * With Control No Fixed Effects
+. regress GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
+>                 Exchange_Rate Foreign_Debt Inflation International_Liquidity, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,056
+                                                {txt}F(21, 4034)       =  {res}   201.47
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.6311
+                                                {txt}Root MSE          =    {res}  11165
+
+{txt}{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           GDP_Per_Capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2}-1671.255{col 39}{space 2} 131.3754{col 50}{space 1}  -12.72{col 59}{space 3}0.000{col 67}{space 4}-1928.824{col 80}{space 3}-1413.687
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} 1633.018{col 39}{space 2} 117.2434{col 50}{space 1}   13.93{col 59}{space 3}0.000{col 67}{space 4} 1403.156{col 80}{space 3}  1862.88
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2} 1222.938{col 39}{space 2} 125.9251{col 50}{space 1}    9.71{col 59}{space 3}0.000{col 67}{space 4} 976.0549{col 80}{space 3}  1469.82
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2}-490.0089{col 39}{space 2} 125.9594{col 50}{space 1}   -3.89{col 59}{space 3}0.000{col 67}{space 4}-736.9588{col 80}{space 3} -243.059
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-778.7102{col 39}{space 2} 128.3609{col 50}{space 1}   -6.07{col 59}{space 3}0.000{col 67}{space 4}-1030.368{col 80}{space 3}-527.0518
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2} 2699.397{col 39}{space 2} 208.2613{col 50}{space 1}   12.96{col 59}{space 3}0.000{col 67}{space 4}  2291.09{col 80}{space 3} 3107.704
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-630.7966{col 39}{space 2} 137.3697{col 50}{space 1}   -4.59{col 59}{space 3}0.000{col 67}{space 4}-900.1171{col 80}{space 3}-361.4761
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2} 417.5262{col 39}{space 2} 132.6694{col 50}{space 1}    3.15{col 59}{space 3}0.002{col 67}{space 4} 157.4209{col 80}{space 3} 677.6315
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} 3017.848{col 39}{space 2} 182.0532{col 50}{space 1}   16.58{col 59}{space 3}0.000{col 67}{space 4} 2660.923{col 80}{space 3} 3374.773
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2} 654.6253{col 39}{space 2} 153.9014{col 50}{space 1}    4.25{col 59}{space 3}0.000{col 67}{space 4} 352.8935{col 80}{space 3} 956.3571
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} 171.3097{col 39}{space 2} 158.6349{col 50}{space 1}    1.08{col 59}{space 3}0.280{col 67}{space 4}-139.7023{col 80}{space 3} 482.3217
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2} 2142.267{col 39}{space 2} 217.5843{col 50}{space 1}    9.85{col 59}{space 3}0.000{col 67}{space 4} 1715.682{col 80}{space 3} 2568.853
+{txt}{space 15}Population {c |}{col 27}{res}{space 2}-5.32e-06{col 39}{space 2} 7.52e-07{col 50}{space 1}   -7.07{col 59}{space 3}0.000{col 67}{space 4}-6.80e-06{col 80}{space 3}-3.85e-06
+{txt}{space 20}CAXGS {c |}{col 27}{res}{space 2}-246.1135{col 39}{space 2} 72.61813{col 50}{space 1}   -3.39{col 59}{space 3}0.001{col 67}{space 4}-388.4852{col 80}{space 3}-103.7419
+{txt}{space 10}Budget_Balanace {c |}{col 27}{res}{space 2}-237.1969{col 39}{space 2} 160.6481{col 50}{space 1}   -1.48{col 59}{space 3}0.140{col 67}{space 4}-552.1559{col 80}{space 3} 77.76198
+{txt}{space 21}CACC {c |}{col 27}{res}{space 2} 1594.051{col 39}{space 2} 115.0605{col 50}{space 1}   13.85{col 59}{space 3}0.000{col 67}{space 4} 1368.469{col 80}{space 3} 1819.633
+{txt}{space 17}DebtServ {c |}{col 27}{res}{space 2} 1018.855{col 39}{space 2} 122.6453{col 50}{space 1}    8.31{col 59}{space 3}0.000{col 67}{space 4} 778.4026{col 80}{space 3} 1259.308
+{txt}{space 12}Exchange_Rate {c |}{col 27}{res}{space 2} 364.9915{col 39}{space 2} 107.8892{col 50}{space 1}    3.38{col 59}{space 3}0.001{col 67}{space 4} 153.4692{col 80}{space 3} 576.5139
+{txt}{space 13}Foreign_Debt {c |}{col 27}{res}{space 2}-531.5606{col 39}{space 2} 103.4525{col 50}{space 1}   -5.14{col 59}{space 3}0.000{col 67}{space 4}-734.3846{col 80}{space 3}-328.7365
+{txt}{space 16}Inflation {c |}{col 27}{res}{space 2} 233.0006{col 39}{space 2} 93.30791{col 50}{space 1}    2.50{col 59}{space 3}0.013{col 67}{space 4}  50.0656{col 80}{space 3} 415.9357
+{txt}{space 2}International_Liquidity {c |}{col 27}{res}{space 2}-1322.706{col 39}{space 2}  185.346{col 50}{space 1}   -7.14{col 59}{space 3}0.000{col 67}{space 4}-1686.087{col 80}{space 3}-959.3255
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2}-27631.34{col 39}{space 2} 1629.615{col 50}{space 1}  -16.96{col 59}{space 3}0.000{col 67}{space 4}-30826.28{col 80}{space 3}-24436.39
+{txt}{hline 26}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store spec2
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. estadd local Controls "Yes", replace
+
+{txt}added macro:
+           e(Controls) : "{res:Yes}"
+
+{com}. 
+. * No Control Yes Fixed Effects
+. encode Country, gen(country_id)
+{txt}
+{com}. xtset country_id Year
+{res}
+{col 1}{txt:Panel variable: }{res:country_id}{txt: (strongly balanced)}
+{p 1 16 2}{txt:Time variable: }{res:Year}{txt:, }{res:{bind:1984}}{txt: to }{res:{bind:2022}}{p_end}
+{txt}{col 10}Delta: {res}1 unit
+{txt}
+{com}. xtreg GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,318
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       118
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.2618{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.4433{col 63}{txt}avg{col 67}={col 69}{res}      36.6
+{txt}     Overall = {res}0.3242{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}12{txt}, {res}117{txt}){col 67}={col 70}{res}    11.14
+{txt}corr(u_i, Xb) = {res}0.3204{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{ralign 91:(Std. err. adjusted for {res:118} clusters in {res:country_id})}
+{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           GDP_Per_Capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2}-1618.995{col 39}{space 2} 355.5885{col 50}{space 1}   -4.55{col 59}{space 3}0.000{col 67}{space 4}-2323.219{col 80}{space 3}-914.7707
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} 368.1422{col 39}{space 2} 234.2586{col 50}{space 1}    1.57{col 59}{space 3}0.119{col 67}{space 4}-95.79476{col 80}{space 3} 832.0792
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2} 2631.047{col 39}{space 2} 415.6569{col 50}{space 1}    6.33{col 59}{space 3}0.000{col 67}{space 4}  1807.86{col 80}{space 3} 3454.234
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2}-440.8963{col 39}{space 2} 284.2859{col 50}{space 1}   -1.55{col 59}{space 3}0.124{col 67}{space 4} -1003.91{col 80}{space 3}  122.117
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-241.0993{col 39}{space 2} 242.1268{col 50}{space 1}   -1.00{col 59}{space 3}0.321{col 67}{space 4}-720.6188{col 80}{space 3} 238.4202
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-1013.639{col 39}{space 2} 452.7577{col 50}{space 1}   -2.24{col 59}{space 3}0.027{col 67}{space 4}-1910.302{col 80}{space 3}-116.9765
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-327.3456{col 39}{space 2} 351.8685{col 50}{space 1}   -0.93{col 59}{space 3}0.354{col 67}{space 4}-1024.203{col 80}{space 3} 369.5115
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2}-14.69174{col 39}{space 2} 487.2349{col 50}{space 1}   -0.03{col 59}{space 3}0.976{col 67}{space 4}-979.6348{col 80}{space 3} 950.2514
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} 1292.618{col 39}{space 2} 579.6841{col 50}{space 1}    2.23{col 59}{space 3}0.028{col 67}{space 4} 144.5837{col 80}{space 3} 2440.651
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2}-444.8737{col 39}{space 2} 703.6691{col 50}{space 1}   -0.63{col 59}{space 3}0.528{col 67}{space 4}-1838.453{col 80}{space 3}  948.706
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2}-173.8467{col 39}{space 2} 316.5515{col 50}{space 1}   -0.55{col 59}{space 3}0.584{col 67}{space 4}-800.7604{col 80}{space 3} 453.0671
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2} 571.0029{col 39}{space 2} 439.7342{col 50}{space 1}    1.30{col 59}{space 3}0.197{col 67}{space 4}-299.8677{col 80}{space 3} 1441.873
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2} 8800.983{col 39}{space 2} 3970.558{col 50}{space 1}    2.22{col 59}{space 3}0.029{col 67}{space 4} 937.5008{col 80}{space 3} 16664.47
+{txt}{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+                  sigma_u {c |} {res} 12986.205
+                  {txt}sigma_e {c |} {res} 7933.5015
+                      {txt}rho {c |} {res} .72821525{txt}   (fraction of variance due to u_i)
+{hline 26}{c BT}{hline 64}
+
+{com}. est store spec3
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. estadd local Controls "No", replace
+
+{txt}added macro:
+           e(Controls) : "{res:No}"
+
+{com}. 
+. * Yes Control Yes Fixed Effects
+. xtreg GDP_Per_Capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
+>                 Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,056
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       117
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.3972{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.2792{col 63}{txt}avg{col 67}={col 69}{res}      34.7
+{txt}     Overall = {res}0.2548{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}21{txt}, {res}116{txt}){col 67}={col 70}{res}     8.96
+{txt}corr(u_i, Xb) = {res}0.1852{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{ralign 91:(Std. err. adjusted for {res:117} clusters in {res:country_id})}
+{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           GDP_Per_Capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2}-1559.945{col 39}{space 2} 320.5504{col 50}{space 1}   -4.87{col 59}{space 3}0.000{col 67}{space 4}-2194.836{col 80}{space 3}-925.0549
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} 249.9272{col 39}{space 2} 238.0547{col 50}{space 1}    1.05{col 59}{space 3}0.296{col 67}{space 4}-221.5702{col 80}{space 3} 721.4246
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2} 1693.532{col 39}{space 2} 334.4596{col 50}{space 1}    5.06{col 59}{space 3}0.000{col 67}{space 4} 1031.093{col 80}{space 3} 2355.972
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2}-174.1678{col 39}{space 2} 239.9731{col 50}{space 1}   -0.73{col 59}{space 3}0.469{col 67}{space 4}-649.4647{col 80}{space 3} 301.1291
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-369.9924{col 39}{space 2} 208.2501{col 50}{space 1}   -1.78{col 59}{space 3}0.078{col 67}{space 4} -782.458{col 80}{space 3} 42.47323
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-111.4783{col 39}{space 2} 358.2974{col 50}{space 1}   -0.31{col 59}{space 3}0.756{col 67}{space 4}-821.1314{col 80}{space 3} 598.1748
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-86.35801{col 39}{space 2} 286.2856{col 50}{space 1}   -0.30{col 59}{space 3}0.763{col 67}{space 4}-653.3827{col 80}{space 3} 480.6667
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2} 345.5936{col 39}{space 2} 410.8631{col 50}{space 1}    0.84{col 59}{space 3}0.402{col 67}{space 4}-468.1726{col 80}{space 3}  1159.36
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} 923.1477{col 39}{space 2} 593.1649{col 50}{space 1}    1.56{col 59}{space 3}0.122{col 67}{space 4}-251.6901{col 80}{space 3} 2097.985
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2}-830.3405{col 39}{space 2} 626.3927{col 50}{space 1}   -1.33{col 59}{space 3}0.188{col 67}{space 4} -2070.99{col 80}{space 3} 410.3092
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2}-165.0619{col 39}{space 2} 290.5668{col 50}{space 1}   -0.57{col 59}{space 3}0.571{col 67}{space 4} -740.566{col 80}{space 3} 410.4421
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2}  150.346{col 39}{space 2} 385.0307{col 50}{space 1}    0.39{col 59}{space 3}0.697{col 67}{space 4}-612.2559{col 80}{space 3} 912.9478
+{txt}{space 15}Population {c |}{col 27}{res}{space 2} 3.56e-06{col 39}{space 2} 8.94e-06{col 50}{space 1}    0.40{col 59}{space 3}0.691{col 67}{space 4}-.0000141{col 80}{space 3} .0000213
+{txt}{space 20}CAXGS {c |}{col 27}{res}{space 2}-94.26134{col 39}{space 2} 67.72879{col 50}{space 1}   -1.39{col 59}{space 3}0.167{col 67}{space 4}-228.4067{col 80}{space 3} 39.88405
+{txt}{space 10}Budget_Balanace {c |}{col 27}{res}{space 2}-679.1548{col 39}{space 2} 221.1661{col 50}{space 1}   -3.07{col 59}{space 3}0.003{col 67}{space 4}-1117.202{col 80}{space 3}-241.1074
+{txt}{space 21}CACC {c |}{col 27}{res}{space 2} 918.0069{col 39}{space 2} 213.5603{col 50}{space 1}    4.30{col 59}{space 3}0.000{col 67}{space 4} 495.0238{col 80}{space 3}  1340.99
+{txt}{space 17}DebtServ {c |}{col 27}{res}{space 2} 1271.664{col 39}{space 2} 239.1508{col 50}{space 1}    5.32{col 59}{space 3}0.000{col 67}{space 4} 797.9957{col 80}{space 3} 1745.332
+{txt}{space 12}Exchange_Rate {c |}{col 27}{res}{space 2} 93.82948{col 39}{space 2} 99.05393{col 50}{space 1}    0.95{col 59}{space 3}0.345{col 67}{space 4}-102.3593{col 80}{space 3} 290.0183
+{txt}{space 13}Foreign_Debt {c |}{col 27}{res}{space 2}-1121.765{col 39}{space 2} 153.5687{col 50}{space 1}   -7.30{col 59}{space 3}0.000{col 67}{space 4}-1425.927{col 80}{space 3}-817.6027
+{txt}{space 16}Inflation {c |}{col 27}{res}{space 2} 311.5969{col 39}{space 2} 119.2514{col 50}{space 1}    2.61{col 59}{space 3}0.010{col 67}{space 4} 75.40458{col 80}{space 3} 547.7892
+{txt}{space 2}International_Liquidity {c |}{col 27}{res}{space 2}-812.1152{col 39}{space 2} 452.2014{col 50}{space 1}   -1.80{col 59}{space 3}0.075{col 67}{space 4}-1707.757{col 80}{space 3} 83.52659
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2} 4115.315{col 39}{space 2} 3196.684{col 50}{space 1}    1.29{col 59}{space 3}0.201{col 67}{space 4}-2216.121{col 80}{space 3} 10446.75
+{txt}{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+                  sigma_u {c |} {res} 14186.127
+                  {txt}sigma_e {c |} {res} 7095.3312
+                      {txt}rho {c |} {res} .79989768{txt}   (fraction of variance due to u_i)
+{hline 26}{c BT}{hline 64}
+
+{com}. est store spec4
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. estadd local Controls "Yes", replace
+
+{txt}added macro:
+           e(Controls) : "{res:Yes}"
+
+{com}.                 
+. esttab spec1 spec2 spec3 spec4 ///
+>                 using gdp_capita_table.html, replace ///
+>                 wrap se r2 scalar(rss) obslast nobaselevels ///
+>                 s(fixed Controls r2_a rss N, label("Fixed Effects" "Controls" <i>"Adjusted R"<i><sup>2</sup> <i>rss<i> ///
+>                 <i>N<i>)) ///
+>                 addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
+>                 keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality)
+{res}{txt}{p 0 4 2}
+(file {bf}
+gdp_capita_table.html{rm}
+not found)
+{p_end}
+(output written to {browse  `"gdp_capita_table.html"'})
+
+{com}.                 
+. //
+. // With Log of GDP
+. //
+. generate log_gdp_capita = ln(GDP_Per_Capita)
+{txt}(115 missing values generated)
+
+{com}. 
+. * No Control No Fixed Effects
+. regress log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,318
+                                                {txt}F(12, 4305)       =  {res}  1196.16
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.7128
+                                                {txt}Root MSE          =    {res} .88619
+
+{txt}{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           log_gdp_capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2} -.093001{col 39}{space 2} .0091291{col 50}{space 1}  -10.19{col 59}{space 3}0.000{col 67}{space 4}-.1108987{col 80}{space 3}-.0751033
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} .1658259{col 39}{space 2} .0106319{col 50}{space 1}   15.60{col 59}{space 3}0.000{col 67}{space 4} .1449818{col 80}{space 3}   .18667
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2} .1859109{col 39}{space 2} .0087793{col 50}{space 1}   21.18{col 59}{space 3}0.000{col 67}{space 4} .1686989{col 80}{space 3} .2031228
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2}  .016009{col 39}{space 2} .0116386{col 50}{space 1}    1.38{col 59}{space 3}0.169{col 67}{space 4}-.0068086{col 80}{space 3} .0388267
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-.0525823{col 39}{space 2} .0111478{col 50}{space 1}   -4.72{col 59}{space 3}0.000{col 67}{space 4}-.0744377{col 80}{space 3}-.0307269
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-.0594282{col 39}{space 2} .0162996{col 50}{space 1}   -3.65{col 59}{space 3}0.000{col 67}{space 4}-.0913839{col 80}{space 3}-.0274726
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2} .0548035{col 39}{space 2} .0146346{col 50}{space 1}    3.74{col 59}{space 3}0.000{col 67}{space 4} .0261122{col 80}{space 3} .0834949
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2}-.0229162{col 39}{space 2} .0142949{col 50}{space 1}   -1.60{col 59}{space 3}0.109{col 67}{space 4}-.0509415{col 80}{space 3} .0051092
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} .1225426{col 39}{space 2} .0168368{col 50}{space 1}    7.28{col 59}{space 3}0.000{col 67}{space 4} .0895338{col 80}{space 3} .1555514
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2}  .200302{col 39}{space 2} .0127593{col 50}{space 1}   15.70{col 59}{space 3}0.000{col 67}{space 4} .1752872{col 80}{space 3} .2253169
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} .0603229{col 39}{space 2} .0131007{col 50}{space 1}    4.60{col 59}{space 3}0.000{col 67}{space 4} .0346387{col 80}{space 3}  .086007
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2}  .401619{col 39}{space 2}  .022118{col 50}{space 1}   18.16{col 59}{space 3}0.000{col 67}{space 4} .3582564{col 80}{space 3} .4449817
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2} 4.654425{col 39}{space 2} .1012725{col 50}{space 1}   45.96{col 59}{space 3}0.000{col 67}{space 4} 4.455879{col 80}{space 3} 4.852972
+{txt}{hline 26}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store spec5
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. estadd local Controls "No", replace
+
+{txt}added macro:
+           e(Controls) : "{res:No}"
+
+{com}. 
+. * Yes Control No Fixed Effects
+. regress log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
+>                 Exchange_Rate Foreign_Debt Inflation International_Liquidity, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,056
+                                                {txt}{help j_robustsingular:F(20, 4034) }      =  {res}        .
+                                                {txt}Prob > F          = {res}         .
+                                                {txt}R-squared         = {res}    0.7857
+                                                {txt}Root MSE          =    {res} .76498
+
+{txt}{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           log_gdp_capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2}-.1284859{col 39}{space 2} .0091886{col 50}{space 1}  -13.98{col 59}{space 3}0.000{col 67}{space 4}-.1465006{col 80}{space 3}-.1104711
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} .1639076{col 39}{space 2} .0097081{col 50}{space 1}   16.88{col 59}{space 3}0.000{col 67}{space 4} .1448743{col 80}{space 3} .1829408
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2} .0533749{col 39}{space 2} .0106729{col 50}{space 1}    5.00{col 59}{space 3}0.000{col 67}{space 4} .0324501{col 80}{space 3} .0742996
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2} .0150404{col 39}{space 2} .0106299{col 50}{space 1}    1.41{col 59}{space 3}0.157{col 67}{space 4}-.0058001{col 80}{space 3} .0358809
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-.0638318{col 39}{space 2} .0109674{col 50}{space 1}   -5.82{col 59}{space 3}0.000{col 67}{space 4}-.0853339{col 80}{space 3}-.0423297
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2} .0445782{col 39}{space 2} .0165401{col 50}{space 1}    2.70{col 59}{space 3}0.007{col 67}{space 4} .0121506{col 80}{space 3} .0770059
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2} .0541235{col 39}{space 2} .0133185{col 50}{space 1}    4.06{col 59}{space 3}0.000{col 67}{space 4} .0280119{col 80}{space 3}  .080235
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2} .0080608{col 39}{space 2} .0127436{col 50}{space 1}    0.63{col 59}{space 3}0.527{col 67}{space 4}-.0169237{col 80}{space 3} .0330453
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} .1102408{col 39}{space 2} .0163669{col 50}{space 1}    6.74{col 59}{space 3}0.000{col 67}{space 4} .0781526{col 80}{space 3}  .142329
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2} .1638496{col 39}{space 2} .0119722{col 50}{space 1}   13.69{col 59}{space 3}0.000{col 67}{space 4} .1403775{col 80}{space 3} .1873218
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} .0845463{col 39}{space 2} .0125281{col 50}{space 1}    6.75{col 59}{space 3}0.000{col 67}{space 4} .0599843{col 80}{space 3} .1091082
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2}  .297557{col 39}{space 2} .0210931{col 50}{space 1}   14.11{col 59}{space 3}0.000{col 67}{space 4} .2562028{col 80}{space 3} .3389112
+{txt}{space 15}Population {c |}{col 27}{res}{space 2}-9.53e-10{col 39}{space 2} 1.02e-10{col 50}{space 1}   -9.39{col 59}{space 3}0.000{col 67}{space 4}-1.15e-09{col 80}{space 3}-7.54e-10
+{txt}{space 20}CAXGS {c |}{col 27}{res}{space 2} .0336755{col 39}{space 2}  .020644{col 50}{space 1}    1.63{col 59}{space 3}0.103{col 67}{space 4}-.0067981{col 80}{space 3}  .074149
+{txt}{space 10}Budget_Balanace {c |}{col 27}{res}{space 2}-.0116024{col 39}{space 2}  .009789{col 50}{space 1}   -1.19{col 59}{space 3}0.236{col 67}{space 4}-.0307942{col 80}{space 3} .0075894
+{txt}{space 21}CACC {c |}{col 27}{res}{space 2} .0864813{col 39}{space 2}  .013875{col 50}{space 1}    6.23{col 59}{space 3}0.000{col 67}{space 4} .0592785{col 80}{space 3}  .113684
+{txt}{space 17}DebtServ {c |}{col 27}{res}{space 2} .0282573{col 39}{space 2} .0092644{col 50}{space 1}    3.05{col 59}{space 3}0.002{col 67}{space 4} .0100939{col 80}{space 3} .0464206
+{txt}{space 12}Exchange_Rate {c |}{col 27}{res}{space 2}  .107211{col 39}{space 2} .0100269{col 50}{space 1}   10.69{col 59}{space 3}0.000{col 67}{space 4} .0875528{col 80}{space 3} .1268692
+{txt}{space 13}Foreign_Debt {c |}{col 27}{res}{space 2} .0031794{col 39}{space 2} .0057738{col 50}{space 1}    0.55{col 59}{space 3}0.582{col 67}{space 4}-.0081405{col 80}{space 3} .0144993
+{txt}{space 16}Inflation {c |}{col 27}{res}{space 2} .0261235{col 39}{space 2} .0092908{col 50}{space 1}    2.81{col 59}{space 3}0.005{col 67}{space 4} .0079083{col 80}{space 3} .0443386
+{txt}{space 2}International_Liquidity {c |}{col 27}{res}{space 2} .0727546{col 39}{space 2}  .009444{col 50}{space 1}    7.70{col 59}{space 3}0.000{col 67}{space 4} .0542392{col 80}{space 3}   .09127
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2} 3.353702{col 39}{space 2} .1603778{col 50}{space 1}   20.91{col 59}{space 3}0.000{col 67}{space 4} 3.039273{col 80}{space 3} 3.668131
+{txt}{hline 26}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store spec6
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. estadd local Controls "Yes", replace
+
+{txt}added macro:
+           e(Controls) : "{res:Yes}"
+
+{com}. 
+. * No Control Yes Fixed Effects
+. xtreg log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,318
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       118
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.3723{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.5893{col 63}{txt}avg{col 67}={col 69}{res}      36.6
+{txt}     Overall = {res}0.4478{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}12{txt}, {res}117{txt}){col 67}={col 70}{res}    56.26
+{txt}corr(u_i, Xb) = {res}0.4573{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{ralign 91:(Std. err. adjusted for {res:118} clusters in {res:country_id})}
+{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           log_gdp_capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2} -.080124{col 39}{space 2} .0146141{col 50}{space 1}   -5.48{col 59}{space 3}0.000{col 67}{space 4}-.1090664{col 80}{space 3}-.0511816
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2}-.0069394{col 39}{space 2} .0198013{col 50}{space 1}   -0.35{col 59}{space 3}0.727{col 67}{space 4}-.0461548{col 80}{space 3} .0322761
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2} .1713713{col 39}{space 2} .0133665{col 50}{space 1}   12.82{col 59}{space 3}0.000{col 67}{space 4} .1448995{col 80}{space 3}  .197843
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2} .0470698{col 39}{space 2} .0194762{col 50}{space 1}    2.42{col 59}{space 3}0.017{col 67}{space 4} .0084983{col 80}{space 3} .0856413
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-.0011946{col 39}{space 2} .0179924{col 50}{space 1}   -0.07{col 59}{space 3}0.947{col 67}{space 4}-.0368277{col 80}{space 3} .0344384
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-.1424026{col 39}{space 2} .0366742{col 50}{space 1}   -3.88{col 59}{space 3}0.000{col 67}{space 4}-.2150339{col 80}{space 3}-.0697713
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-.0104235{col 39}{space 2} .0390274{col 50}{space 1}   -0.27{col 59}{space 3}0.790{col 67}{space 4}-.0877153{col 80}{space 3} .0668683
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2}-.0763631{col 39}{space 2} .0480446{col 50}{space 1}   -1.59{col 59}{space 3}0.115{col 67}{space 4}-.1715129{col 80}{space 3} .0187867
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2}-.0273089{col 39}{space 2} .0414504{col 50}{space 1}   -0.66{col 59}{space 3}0.511{col 67}{space 4}-.1093992{col 80}{space 3} .0547813
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2} .0439326{col 39}{space 2} .0385363{col 50}{space 1}    1.14{col 59}{space 3}0.257{col 67}{space 4}-.0323864{col 80}{space 3} .1202517
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} .0979946{col 39}{space 2} .0306828{col 50}{space 1}    3.19{col 59}{space 3}0.002{col 67}{space 4}  .037229{col 80}{space 3} .1587603
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2} .1478526{col 39}{space 2} .0585527{col 50}{space 1}    2.53{col 59}{space 3}0.013{col 67}{space 4} .0318921{col 80}{space 3} .2638131
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2} 7.198751{col 39}{space 2} .2346694{col 50}{space 1}   30.68{col 59}{space 3}0.000{col 67}{space 4}    6.734{col 80}{space 3} 7.663501
+{txt}{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+                  sigma_u {c |} {res} 1.2503225
+                  {txt}sigma_e {c |} {res} .50359322
+                      {txt}rho {c |} {res} .86041918{txt}   (fraction of variance due to u_i)
+{hline 26}{c BT}{hline 64}
+
+{com}. est store spec7
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. estadd local Controls "No", replace
+
+{txt}added macro:
+           e(Controls) : "{res:No}"
+
+{com}. 
+. * Yes Control Yes Fixed Effects
+. xtreg log_gdp_capita Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
+>                 Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,056
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       117
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.6198{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.1394{col 63}{txt}avg{col 67}={col 69}{res}      34.7
+{txt}     Overall = {res}0.2097{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}21{txt}, {res}116{txt}){col 67}={col 70}{res}    50.64
+{txt}corr(u_i, Xb) = {res}-0.0263{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{ralign 91:(Std. err. adjusted for {res:117} clusters in {res:country_id})}
+{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}           log_gdp_capita{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2} -.098189{col 39}{space 2} .0107492{col 50}{space 1}   -9.13{col 59}{space 3}0.000{col 67}{space 4}-.1194791{col 80}{space 3}-.0768988
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} .0225476{col 39}{space 2} .0140986{col 50}{space 1}    1.60{col 59}{space 3}0.112{col 67}{space 4}-.0053765{col 80}{space 3} .0504716
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2}  .052267{col 39}{space 2} .0109416{col 50}{space 1}    4.78{col 59}{space 3}0.000{col 67}{space 4} .0305958{col 80}{space 3} .0739382
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2} .0346053{col 39}{space 2} .0150949{col 50}{space 1}    2.29{col 59}{space 3}0.024{col 67}{space 4}  .004708{col 80}{space 3} .0645026
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-.0229342{col 39}{space 2} .0143135{col 50}{space 1}   -1.60{col 59}{space 3}0.112{col 67}{space 4} -.051284{col 80}{space 3} .0054155
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-.0046275{col 39}{space 2} .0215666{col 50}{space 1}   -0.21{col 59}{space 3}0.830{col 67}{space 4}-.0473428{col 80}{space 3} .0380878
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2} .0102002{col 39}{space 2} .0313578{col 50}{space 1}    0.33{col 59}{space 3}0.746{col 67}{space 4}-.0519078{col 80}{space 3} .0723083
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2}-.0149186{col 39}{space 2} .0391018{col 50}{space 1}   -0.38{col 59}{space 3}0.704{col 67}{space 4}-.0923647{col 80}{space 3} .0625275
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2}-.0500582{col 39}{space 2} .0331144{col 50}{space 1}   -1.51{col 59}{space 3}0.133{col 67}{space 4}-.1156454{col 80}{space 3}  .015529
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2} .0204749{col 39}{space 2} .0328472{col 50}{space 1}    0.62{col 59}{space 3}0.534{col 67}{space 4}-.0445832{col 80}{space 3} .0855329
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} .0432493{col 39}{space 2} .0210997{col 50}{space 1}    2.05{col 59}{space 3}0.043{col 67}{space 4} .0014587{col 80}{space 3} .0850398
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2} .0391062{col 39}{space 2} .0381666{col 50}{space 1}    1.02{col 59}{space 3}0.308{col 67}{space 4}-.0364876{col 80}{space 3}    .1147
+{txt}{space 15}Population {c |}{col 27}{res}{space 2} 3.31e-09{col 39}{space 2} 1.48e-09{col 50}{space 1}    2.23{col 59}{space 3}0.028{col 67}{space 4} 3.69e-10{col 80}{space 3} 6.25e-09
+{txt}{space 20}CAXGS {c |}{col 27}{res}{space 2} .0027888{col 39}{space 2} .0050459{col 50}{space 1}    0.55{col 59}{space 3}0.582{col 67}{space 4}-.0072053{col 80}{space 3} .0127829
+{txt}{space 10}Budget_Balanace {c |}{col 27}{res}{space 2}-.0382078{col 39}{space 2} .0102354{col 50}{space 1}   -3.73{col 59}{space 3}0.000{col 67}{space 4}-.0584804{col 80}{space 3}-.0179352
+{txt}{space 21}CACC {c |}{col 27}{res}{space 2} .0463409{col 39}{space 2}  .009737{col 50}{space 1}    4.76{col 59}{space 3}0.000{col 67}{space 4} .0270556{col 80}{space 3} .0656263
+{txt}{space 17}DebtServ {c |}{col 27}{res}{space 2} .0963577{col 39}{space 2} .0135904{col 50}{space 1}    7.09{col 59}{space 3}0.000{col 67}{space 4} .0694401{col 80}{space 3} .1232752
+{txt}{space 12}Exchange_Rate {c |}{col 27}{res}{space 2} .0698312{col 39}{space 2} .0071503{col 50}{space 1}    9.77{col 59}{space 3}0.000{col 67}{space 4} .0556691{col 80}{space 3} .0839932
+{txt}{space 13}Foreign_Debt {c |}{col 27}{res}{space 2}-.0098232{col 39}{space 2} .0081398{col 50}{space 1}   -1.21{col 59}{space 3}0.230{col 67}{space 4}-.0259451{col 80}{space 3} .0062986
+{txt}{space 16}Inflation {c |}{col 27}{res}{space 2}   .07587{col 39}{space 2} .0090412{col 50}{space 1}    8.39{col 59}{space 3}0.000{col 67}{space 4} .0579627{col 80}{space 3} .0937773
+{txt}{space 2}International_Liquidity {c |}{col 27}{res}{space 2} .0385214{col 39}{space 2} .0148513{col 50}{space 1}    2.59{col 59}{space 3}0.011{col 67}{space 4} .0091066{col 80}{space 3} .0679362
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2} 5.878519{col 39}{space 2} .2160608{col 50}{space 1}   27.21{col 59}{space 3}0.000{col 67}{space 4} 5.450583{col 80}{space 3} 6.306455
+{txt}{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+                  sigma_u {c |} {res} 1.4100444
+                  {txt}sigma_e {c |} {res} .36805605
+                      {txt}rho {c |} {res} .93621233{txt}   (fraction of variance due to u_i)
+{hline 26}{c BT}{hline 64}
+
+{com}. est store spec8
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. estadd local Controls "Yes", replace
+
+{txt}added macro:
+           e(Controls) : "{res:Yes}"
+
+{com}. 
+. esttab spec5 spec6 spec7 spec8 ///
+>                 using log_gdp_capita_table.html, replace ///
+>                 wrap se r2 scalar(rss) obslast nobaselevels ///
+>                 s(fixed Controls r2_a rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
+>                 <i>N<i>)) ///
+>                 addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
+>                 keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality)
+{res}{txt}{p 0 4 2}
+(file {bf}
+log_gdp_capita_table.html{rm}
+not found)
+{p_end}
+(output written to {browse  `"log_gdp_capita_table.html"'})
+
+{com}. 
+. //
+. // GDP GROWTH ANALYSIS
+. //
+. * Loading Data also encoding for fixed effects later on
+. setroot
+{txt}{bf:setroot} is searching for the root project path of "{res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project{txt}"
+{res}{txt}root project path found; setting {res}"global root = /Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project" 
+{txt}
+{com}. use "DATA/concatenated/df_all_features.dta", clear
+{txt}
+{com}. keep if GDP_Growth < 150
+{txt}(108 observations deleted)
+
+{com}. * Note: Also dropped all country years that don'have data for GDP_Growth
+. 
+. * No Control No Fixed Effects
+. regress GDP_Growth Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,337
+                                                {txt}F(12, 4324)       =  {res}    17.44
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.0435
+                                                {txt}Root MSE          =    {res} 5.9334
+
+{txt}{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}               GDP_Growth{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2} .6084146{col 39}{space 2} .0663363{col 50}{space 1}    9.17{col 59}{space 3}0.000{col 67}{space 4} .4783616{col 80}{space 3} .7384677
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} .2613024{col 39}{space 2} .0649615{col 50}{space 1}    4.02{col 59}{space 3}0.000{col 67}{space 4} .1339446{col 80}{space 3} .3886603
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2}-.1440313{col 39}{space 2} .0690633{col 50}{space 1}   -2.09{col 59}{space 3}0.037{col 67}{space 4}-.2794308{col 80}{space 3}-.0086319
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2} .1635109{col 39}{space 2} .0709651{col 50}{space 1}    2.30{col 59}{space 3}0.021{col 67}{space 4}  .024383{col 80}{space 3} .3026389
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2} .0039566{col 39}{space 2}  .076473{col 50}{space 1}    0.05{col 59}{space 3}0.959{col 67}{space 4}-.1459697{col 80}{space 3}  .153883
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-.2480291{col 39}{space 2} .1227998{col 50}{space 1}   -2.02{col 59}{space 3}0.043{col 67}{space 4}-.4887796{col 80}{space 3}-.0072787
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-.1576671{col 39}{space 2} .0827225{col 50}{space 1}   -1.91{col 59}{space 3}0.057{col 67}{space 4}-.3198457{col 80}{space 3} .0045115
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2}  -.20652{col 39}{space 2} .0816163{col 50}{space 1}   -2.53{col 59}{space 3}0.011{col 67}{space 4}-.3665298{col 80}{space 3}-.0465102
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2}-.0265464{col 39}{space 2} .1167811{col 50}{space 1}   -0.23{col 59}{space 3}0.820{col 67}{space 4}-.2554973{col 80}{space 3} .2024045
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2}-.1825051{col 39}{space 2} .0812074{col 50}{space 1}   -2.25{col 59}{space 3}0.025{col 67}{space 4}-.3417132{col 80}{space 3} -.023297
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} .0598374{col 39}{space 2} .0989746{col 50}{space 1}    0.60{col 59}{space 3}0.545{col 67}{space 4}-.1342035{col 80}{space 3} .2538783
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2}-.3504247{col 39}{space 2} .1351165{col 50}{space 1}   -2.59{col 59}{space 3}0.010{col 67}{space 4}-.6153224{col 80}{space 3} -.085527
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2} .7271499{col 39}{space 2} .9533418{col 50}{space 1}    0.76{col 59}{space 3}0.446{col 67}{space 4}-1.141889{col 80}{space 3} 2.596189
+{txt}{hline 26}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store spec1
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. estadd local Controls "No", replace
+
+{txt}added macro:
+           e(Controls) : "{res:No}"
+
+{com}. 
+. * With Control No Fixed Effects
+. regress GDP_Growth Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
+>                 Exchange_Rate Foreign_Debt Inflation International_Liquidity, robust
+
+{txt}Linear regression                               Number of obs     = {res}     4,066
+                                                {txt}{help j_robustsingular:F(20, 4044) }      =  {res}        .
+                                                {txt}Prob > F          = {res}         .
+                                                {txt}R-squared         = {res}    0.0616
+                                                {txt}Root MSE          =    {res} 5.1558
+
+{txt}{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}               GDP_Growth{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2} .3495592{col 39}{space 2} .0644758{col 50}{space 1}    5.42{col 59}{space 3}0.000{col 67}{space 4} .2231511{col 80}{space 3} .4759672
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} .1909614{col 39}{space 2}  .060982{col 50}{space 1}    3.13{col 59}{space 3}0.002{col 67}{space 4}  .071403{col 80}{space 3} .3105198
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2} -.146531{col 39}{space 2} .0688703{col 50}{space 1}   -2.13{col 59}{space 3}0.033{col 67}{space 4}-.2815546{col 80}{space 3}-.0115073
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2} .1078105{col 39}{space 2} .0656719{col 50}{space 1}    1.64{col 59}{space 3}0.101{col 67}{space 4}-.0209427{col 80}{space 3} .2365637
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2}-.0293292{col 39}{space 2} .0695979{col 50}{space 1}   -0.42{col 59}{space 3}0.673{col 67}{space 4}-.1657795{col 80}{space 3}  .107121
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-.2167468{col 39}{space 2} .1293611{col 50}{space 1}   -1.68{col 59}{space 3}0.094{col 67}{space 4}-.4703658{col 80}{space 3} .0368723
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-.1602598{col 39}{space 2} .0710954{col 50}{space 1}   -2.25{col 59}{space 3}0.024{col 67}{space 4} -.299646{col 80}{space 3}-.0208736
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2}-.1092362{col 39}{space 2} .0715097{col 50}{space 1}   -1.53{col 59}{space 3}0.127{col 67}{space 4}-.2494347{col 80}{space 3} .0309622
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} .0991121{col 39}{space 2} .1183191{col 50}{space 1}    0.84{col 59}{space 3}0.402{col 67}{space 4}-.1328585{col 80}{space 3} .3310828
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2}-.2145745{col 39}{space 2} .0740965{col 50}{space 1}   -2.90{col 59}{space 3}0.004{col 67}{space 4}-.3598444{col 80}{space 3}-.0693046
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2}-.0187132{col 39}{space 2} .0932394{col 50}{space 1}   -0.20{col 59}{space 3}0.841{col 67}{space 4}-.2015137{col 80}{space 3} .1640873
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2}-.4087794{col 39}{space 2} .1356893{col 50}{space 1}   -3.01{col 59}{space 3}0.003{col 67}{space 4}-.6748051{col 80}{space 3}-.1427537
+{txt}{space 15}Population {c |}{col 27}{res}{space 2} 2.00e-09{col 39}{space 2} 3.61e-10{col 50}{space 1}    5.55{col 59}{space 3}0.000{col 67}{space 4} 1.30e-09{col 80}{space 3} 2.71e-09
+{txt}{space 20}CAXGS {c |}{col 27}{res}{space 2} .0221173{col 39}{space 2}  .037305{col 50}{space 1}    0.59{col 59}{space 3}0.553{col 67}{space 4} -.051021{col 80}{space 3} .0952557
+{txt}{space 10}Budget_Balanace {c |}{col 27}{res}{space 2} .2818544{col 39}{space 2} .0920304{col 50}{space 1}    3.06{col 59}{space 3}0.002{col 67}{space 4} .1014242{col 80}{space 3} .4622847
+{txt}{space 21}CACC {c |}{col 27}{res}{space 2}-.1778002{col 39}{space 2}  .059367{col 50}{space 1}   -2.99{col 59}{space 3}0.003{col 67}{space 4}-.2941922{col 80}{space 3}-.0614082
+{txt}{space 17}DebtServ {c |}{col 27}{res}{space 2}-.0880603{col 39}{space 2} .1016935{col 50}{space 1}   -0.87{col 59}{space 3}0.387{col 67}{space 4}-.2874355{col 80}{space 3} .1113149
+{txt}{space 12}Exchange_Rate {c |}{col 27}{res}{space 2} .3310138{col 39}{space 2} .0701519{col 50}{space 1}    4.72{col 59}{space 3}0.000{col 67}{space 4} .1934773{col 80}{space 3} .4685502
+{txt}{space 13}Foreign_Debt {c |}{col 27}{res}{space 2} .0784111{col 39}{space 2} .0417576{col 50}{space 1}    1.88{col 59}{space 3}0.060{col 67}{space 4}-.0034567{col 80}{space 3} .1602789
+{txt}{space 16}Inflation {c |}{col 27}{res}{space 2}-.1012458{col 39}{space 2} .0612802{col 50}{space 1}   -1.65{col 59}{space 3}0.099{col 67}{space 4}-.2213887{col 80}{space 3} .0188972
+{txt}{space 2}International_Liquidity {c |}{col 27}{res}{space 2} -.003938{col 39}{space 2} .0677237{col 50}{space 1}   -0.06{col 59}{space 3}0.954{col 67}{space 4}-.1367138{col 80}{space 3} .1288377
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2}  1.63137{col 39}{space 2} 1.113826{col 50}{space 1}    1.46{col 59}{space 3}0.143{col 67}{space 4}-.5523413{col 80}{space 3} 3.815082
+{txt}{hline 26}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. est store spec2
+{txt}
+{com}. estadd local fixed "No", replace
+
+{txt}added macro:
+              e(fixed) : "{res:No}"
+
+{com}. estadd local Controls "Yes", replace
+
+{txt}added macro:
+           e(Controls) : "{res:Yes}"
+
+{com}. 
+. * No Control Yes Fixed Effects
+. encode Country, gen(country_id)
+{txt}
+{com}. xtset country_id Year
+{res}
+{col 1}{txt:Panel variable: }{res:country_id}{txt: (unbalanced)}
+{p 1 16 2}{txt:Time variable: }{res:Year}{txt:, }{res:{bind:1984}}{txt: to }{res:{bind:2022}}{txt:, but with gaps}{p_end}
+{txt}{col 10}Delta: {res}1 unit
+{txt}
+{com}. xtreg GDP_Growth Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,337
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       118
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.0388{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.0194{col 63}{txt}avg{col 67}={col 69}{res}      36.8
+{txt}     Overall = {res}0.0161{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}12{txt}, {res}117{txt}){col 67}={col 70}{res}     5.09
+{txt}corr(u_i, Xb) = {res}-0.3640{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{ralign 91:(Std. err. adjusted for {res:118} clusters in {res:country_id})}
+{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}               GDP_Growth{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2} .5360173{col 39}{space 2} .1206145{col 50}{space 1}    4.44{col 59}{space 3}0.000{col 67}{space 4} .2971465{col 80}{space 3}  .774888
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} .3413305{col 39}{space 2} .0991688{col 50}{space 1}    3.44{col 59}{space 3}0.001{col 67}{space 4} .1449319{col 80}{space 3} .5377292
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2}-.1785192{col 39}{space 2} .0848942{col 50}{space 1}   -2.10{col 59}{space 3}0.038{col 67}{space 4}-.3466478{col 80}{space 3}-.0103907
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2} .2044195{col 39}{space 2} .1124338{col 50}{space 1}    1.82{col 59}{space 3}0.072{col 67}{space 4}-.0182498{col 80}{space 3} .4270888
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2} .1766979{col 39}{space 2} .1466412{col 50}{space 1}    1.20{col 59}{space 3}0.231{col 67}{space 4}-.1137174{col 80}{space 3} .4671131
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2} .0059461{col 39}{space 2} .1869936{col 50}{space 1}    0.03{col 59}{space 3}0.975{col 67}{space 4}-.3643848{col 80}{space 3} .3762771
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2} -.123471{col 39}{space 2} .2010346{col 50}{space 1}   -0.61{col 59}{space 3}0.540{col 67}{space 4}-.5216095{col 80}{space 3} .2746674
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2}-.0716943{col 39}{space 2} .2148197{col 50}{space 1}   -0.33{col 59}{space 3}0.739{col 67}{space 4}-.4971335{col 80}{space 3} .3537449
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} -.127961{col 39}{space 2} .2624635{col 50}{space 1}   -0.49{col 59}{space 3}0.627{col 67}{space 4}-.6477562{col 80}{space 3} .3918342
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2} .0226231{col 39}{space 2} .2401663{col 50}{space 1}    0.09{col 59}{space 3}0.925{col 67}{space 4}-.4530137{col 80}{space 3}   .49826
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2}  .325807{col 39}{space 2} .2686411{col 50}{space 1}    1.21{col 59}{space 3}0.228{col 67}{space 4}-.2062227{col 80}{space 3} .8578368
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2}-.3146794{col 39}{space 2} .2794797{col 50}{space 1}   -1.13{col 59}{space 3}0.262{col 67}{space 4}-.8681743{col 80}{space 3} .2388155
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2}-4.045184{col 39}{space 2}  2.27237{col 50}{space 1}   -1.78{col 59}{space 3}0.078{col 67}{space 4}-8.545495{col 80}{space 3} .4551261
+{txt}{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+                  sigma_u {c |} {res} 1.9613292
+                  {txt}sigma_e {c |} {res} 5.8268965
+                      {txt}rho {c |} {res} .10176877{txt}   (fraction of variance due to u_i)
+{hline 26}{c BT}{hline 64}
+
+{com}. est store spec3
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. estadd local Controls "No", replace
+
+{txt}added macro:
+           e(Controls) : "{res:No}"
+
+{com}. 
+. * Yes Control Yes Fixed Effects
+. xtreg GDP_Growth Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality Population CAXGS Budget_Balanace CACC DebtServ ///
+>                 Exchange_Rate Foreign_Debt Inflation International_Liquidity, fe cluster(country_id)
+{res}
+{txt}Fixed-effects (within) regression{col 49}Number of obs{col 67}={col 69}{res}     4,066
+{txt}Group variable: {res}country_id{txt}{col 49}Number of groups{col 67}={col 69}{res}       117
+
+{txt}R-squared:{col 49}Obs per group:
+     Within  = {res}0.0462{col 63}{txt}min{col 67}={col 69}{res}         2
+{txt}     Between = {res}0.0205{col 63}{txt}avg{col 67}={col 69}{res}      34.8
+{txt}     Overall = {res}0.0132{col 63}{txt}max{col 67}={col 69}{res}        39
+
+{txt}{col 49}F({res}21{txt}, {res}116{txt}){col 67}={col 70}{res}     6.42
+{txt}corr(u_i, Xb) = {res}-0.4252{txt}{col 49}Prob > F{col 67}={col 73}{res}0.0000
+
+{txt}{ralign 91:(Std. err. adjusted for {res:117} clusters in {res:country_id})}
+{hline 26}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 27}{c |}{col 39}    Robust
+{col 1}               GDP_Growth{col 27}{c |} Coefficient{col 39}  std. err.{col 51}      t{col 59}   P>|t|{col 67}     [95% con{col 80}f. interval]
+{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Government_Stability {c |}{col 27}{res}{space 2} .2110378{col 39}{space 2} .0806319{col 50}{space 1}    2.62{col 59}{space 3}0.010{col 67}{space 4} .0513362{col 80}{space 3} .3707394
+{txt}{space 1}Socioeconomic_Conditions {c |}{col 27}{res}{space 2} .2780767{col 39}{space 2} .0826363{col 50}{space 1}    3.37{col 59}{space 3}0.001{col 67}{space 4} .1144051{col 80}{space 3} .4417483
+{txt}{space 7}Investment_Profile {c |}{col 27}{res}{space 2}-.2316081{col 39}{space 2} .0820139{col 50}{space 1}   -2.82{col 59}{space 3}0.006{col 67}{space 4} -.394047{col 80}{space 3}-.0691692
+{txt}{space 8}Internal_Conflict {c |}{col 27}{res}{space 2} .1044901{col 39}{space 2}  .121512{col 50}{space 1}    0.86{col 59}{space 3}0.392{col 67}{space 4}-.1361797{col 80}{space 3}   .34516
+{txt}{space 8}External_Conflict {c |}{col 27}{res}{space 2} .0736608{col 39}{space 2}  .135171{col 50}{space 1}    0.54{col 59}{space 3}0.587{col 67}{space 4}-.1940625{col 80}{space 3}  .341384
+{txt}{space 15}Corruption {c |}{col 27}{res}{space 2}-.1449544{col 39}{space 2} .2620924{col 50}{space 1}   -0.55{col 59}{space 3}0.581{col 67}{space 4}-.6640615{col 80}{space 3} .3741526
+{txt}{space 9}Military_Politic {c |}{col 27}{res}{space 2}-.3220193{col 39}{space 2} .2252354{col 50}{space 1}   -1.43{col 59}{space 3}0.155{col 67}{space 4}-.7681264{col 80}{space 3} .1240878
+{txt}{space 8}Religious_Tension {c |}{col 27}{res}{space 2} .2045274{col 39}{space 2} .2070534{col 50}{space 1}    0.99{col 59}{space 3}0.325{col 67}{space 4} -.205568{col 80}{space 3} .6146227
+{txt}{space 16}Law_Order {c |}{col 27}{res}{space 2} .2276654{col 39}{space 2} .2096366{col 50}{space 1}    1.09{col 59}{space 3}0.280{col 67}{space 4}-.1875462{col 80}{space 3}  .642877
+{txt}{space 11}Ethnic_Tension {c |}{col 27}{res}{space 2}-.2717233{col 39}{space 2} .1659887{col 50}{space 1}   -1.64{col 59}{space 3}0.104{col 67}{space 4}-.6004847{col 80}{space 3} .0570382
+{txt}Democratic_Accountability {c |}{col 27}{res}{space 2} .0625302{col 39}{space 2} .1485097{col 50}{space 1}    0.42{col 59}{space 3}0.674{col 67}{space 4}-.2316119{col 80}{space 3} .3566724
+{txt}{space 6}Bureaucracy_Quality {c |}{col 27}{res}{space 2}-.1866407{col 39}{space 2} .2830943{col 50}{space 1}   -0.66{col 59}{space 3}0.511{col 67}{space 4}-.7473446{col 80}{space 3} .3740632
+{txt}{space 15}Population {c |}{col 27}{res}{space 2}-4.92e-09{col 39}{space 2} 2.93e-09{col 50}{space 1}   -1.68{col 59}{space 3}0.095{col 67}{space 4}-1.07e-08{col 80}{space 3} 8.72e-10
+{txt}{space 20}CAXGS {c |}{col 27}{res}{space 2} .0403106{col 39}{space 2} .0437079{col 50}{space 1}    0.92{col 59}{space 3}0.358{col 67}{space 4}-.0462584{col 80}{space 3} .1268795
+{txt}{space 10}Budget_Balanace {c |}{col 27}{res}{space 2} .3156125{col 39}{space 2} .0762216{col 50}{space 1}    4.14{col 59}{space 3}0.000{col 67}{space 4}  .164646{col 80}{space 3}  .466579
+{txt}{space 21}CACC {c |}{col 27}{res}{space 2} -.042449{col 39}{space 2} .0806943{col 50}{space 1}   -0.53{col 59}{space 3}0.600{col 67}{space 4}-.2022742{col 80}{space 3} .1173761
+{txt}{space 17}DebtServ {c |}{col 27}{res}{space 2}-.1602112{col 39}{space 2}    .1079{col 50}{space 1}   -1.48{col 59}{space 3}0.140{col 67}{space 4}-.3739208{col 80}{space 3} .0534984
+{txt}{space 12}Exchange_Rate {c |}{col 27}{res}{space 2} .3349859{col 39}{space 2} .0863595{col 50}{space 1}    3.88{col 59}{space 3}0.000{col 67}{space 4}   .16394{col 80}{space 3} .5060319
+{txt}{space 13}Foreign_Debt {c |}{col 27}{res}{space 2} .1626655{col 39}{space 2} .0796236{col 50}{space 1}    2.04{col 59}{space 3}0.043{col 67}{space 4} .0049609{col 80}{space 3}   .32037
+{txt}{space 16}Inflation {c |}{col 27}{res}{space 2}  -.12705{col 39}{space 2} .1124934{col 50}{space 1}   -1.13{col 59}{space 3}0.261{col 67}{space 4}-.3498574{col 80}{space 3} .0957574
+{txt}{space 2}International_Liquidity {c |}{col 27}{res}{space 2}  -.05542{col 39}{space 2} .1197123{col 50}{space 1}   -0.46{col 59}{space 3}0.644{col 67}{space 4}-.2925252{col 80}{space 3} .1816852
+{txt}{space 20}_cons {c |}{col 27}{res}{space 2}-1.264302{col 39}{space 2} 1.641472{col 50}{space 1}   -0.77{col 59}{space 3}0.443{col 67}{space 4}-4.515444{col 80}{space 3}  1.98684
+{txt}{hline 26}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+                  sigma_u {c |} {res} 2.0901594
+                  {txt}sigma_e {c |} {res} 5.0293609
+                      {txt}rho {c |} {res} .14727881{txt}   (fraction of variance due to u_i)
+{hline 26}{c BT}{hline 64}
+
+{com}. est store spec4
+{txt}
+{com}. estadd local fixed "Yes", replace
+
+{txt}added macro:
+              e(fixed) : "{res:Yes}"
+
+{com}. estadd local Controls "Yes", replace
+
+{txt}added macro:
+           e(Controls) : "{res:Yes}"
+
+{com}.                 
+. esttab spec1 spec2 spec3 spec4 ///
+>                 using gdp_growth_table.html, replace ///
+>                 wrap se r2 scalar(rss) obslast nobaselevels ///
+>                 s(fixed Controls r2 rss N, label("Fixed Effects" "Controls" <i>R<i><sup>2</sup> <i>rss<i> ///
+>                 <i>N<i>)) ///
+>                 addnotes("Fixed Effects include time and entity effects"  "Controls: Population, CAXGS, Budget_Balance, Current Account, Debt Service, Exchange Rate, Foreign Debt, Inflation, international Liquidity") ///
+>                 keep(Government_Stability Socioeconomic_Conditions Investment_Profile ///
+>                 Internal_Conflict External_Conflict Corruption Military_Politic ///
+>                 Religious_Tension Law_Order Ethnic_Tension Democratic_Accountability ///
+>                 Bureaucracy_Quality)
+{res}{txt}{p 0 4 2}
+(file {bf}
+gdp_growth_table.html{rm}
+not found)
+{p_end}
+(output written to {browse  `"gdp_growth_table.html"'})
+
+{com}. 
+{txt}end of do-file
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/richardh/Desktop/Uni Stuff/Year 3/ECO375/ECO375-Project/Submission_Package/stata_log.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 5 Dec 2024, 18:52:09
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
